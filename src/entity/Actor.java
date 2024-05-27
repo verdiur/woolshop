@@ -2,18 +2,18 @@ package entity;
 
 import collision.Collision;
 import main.GamePanel;
-import main.DirEnum;
+import utils.DirEnum;
 
-public abstract class Actor extends Entity implements Collision {
+public abstract class Actor extends Entity implements Collision
+{
+    protected GamePanel m_gp;
 
-    GamePanel m_gp;
-
-    public Actor(GamePanel a_gp, float x, float y) {
+    public Actor(GamePanel a_gp, int x, int y) {
         super(x, y);
         m_gp = a_gp;
     }
 
-    @Override
+    // @Override
     public boolean doesCollide(Entity entity, DirEnum signal) {
         if ((signal == DirEnum.up && isBelow(entity))
         || (signal == DirEnum.down && isAbove(entity))
@@ -52,26 +52,22 @@ public abstract class Actor extends Entity implements Collision {
     
     public void move(DirEnum signal) {
         switch(signal) {
-            case up : {
-                if (getY()<m_gp.TILE_SIZE) {
-					setY(getY()+1);
+            case up:
+                if (getY() < m_gp.TILE_SIZE) {
+                    m_y += 1;
 				}
-            }
-            case down : {
+            case down:
+                if (getY() > 0) {
+					m_y -= 1;
+				}
+            case left:
+                if (getX() < m_gp.TILE_SIZE) {
+					m_x += 1;
+				}
+            case right:
                 if (getY()>0) {
-					setY(getY()-1);
-				}
-            }
-            case left : {
-                if (getX()<m_gp.TILE_SIZE) {
-					setY(getY()+1);
-				}
-            }
-            case right : {
-                if (getY()>0) {
-					setY(getY()-1);
-				}
-            }
+					m_x -= 1;
+                }
         }
     }
 }

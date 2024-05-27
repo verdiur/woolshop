@@ -28,14 +28,6 @@ public abstract class Entity
 		return m_y;
 	}
 
-	public void setX(float x) {
-		m_x = x;
-	}
-
-	public void setY(float y) {
-		m_y = y;
-	}
-
 	/**
 	 * Méthode abstraite de dessin.
 	 * @param g2 contexte graphique

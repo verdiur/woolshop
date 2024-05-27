@@ -1,6 +1,6 @@
 package collision;
 import entity.Entity;
-import main.DirEnum;
+import utils.DirEnum;
 
 public interface Collision{
 
