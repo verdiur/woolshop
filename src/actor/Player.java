@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 
 import entity.Actor;
 import main.GamePanel;
@@ -16,8 +14,9 @@ import util.DirEnum;
  */
 public class Player
 extends Actor 
-implements KeyListener 
 {
+    PlayerKeyAdapter m_ka;
+
     /**
      * Constructeur de classe avec un seul sprite. Le sprite sera chargé dans un ArrayList
      * avec comme clé "idle".
@@ -28,6 +27,7 @@ implements KeyListener
      */
     public Player(GamePanel a_gp, int x, int y, BufferedImage sprite) {
         super(a_gp, x, y, sprite);
+        m_ka = new PlayerKeyAdapter(this);
     }
 
     /**
@@ -39,6 +39,7 @@ implements KeyListener
      */
     public Player(GamePanel a_gp, int x, int y, HashMap<String, ArrayList<BufferedImage>> sprite_map) {
         super(a_gp, x, y, sprite_map);
+        m_ka = new PlayerKeyAdapter(this);
     }
 
     @Override
@@ -51,26 +52,9 @@ implements KeyListener
         );
     }
 
-    /// TODO ajouter des animations et tout
     @Override
-    public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode();
-        switch (code) {
-            case 0x25:      // left
-                move(DirEnum.left);
-            case 0x27:      // right
-                move(DirEnum.right);
-            case 0x26:      // up
-                move(DirEnum.up);
-            case 0x28:
-                move(DirEnum.down);
-            /// TODO ajouter ici des contrôles supplémentaires...
-        }
+    public void update() {
+        DirEnum dir = m_ka.getDir();
+        move(dir);
     }
-
-    @Override
-    public void keyReleased(KeyEvent e) {}
-
-    @Override
-    public void keyTyped(KeyEvent e) {}
 }

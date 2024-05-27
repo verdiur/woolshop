@@ -92,25 +92,13 @@ public abstract class Actor extends Entity implements Collision
         }
     }
     
+    /**
+     * Se déplacer dans une direction. Pour l'instant move() fait se téléporter
+     * d'une case.
+     * TODO voir plus tard pour un mouvement plus fluide avec interpolation.
+     * @param dir
+     */
     public void move(DirEnum dir) {
-        // switch(dir) {
-        //     case up:
-        //         if (m_y < m_gp.TILE_SIZE) {
-        //             m_y += 1;
-		// 		}
-        //     case down:
-        //         if (m_y > 0) {
-		// 			m_y -= 1;
-		// 		}
-        //     case left:
-        //         if (m_x < m_gp.TILE_SIZE) {
-		// 			m_x += 1;
-		// 		}
-        //     case right:
-        //         if (m_x > 0) {
-		// 			m_x -= 1;
-        //         }
-        // }
         switch(dir) {
             case up:
                 m_y -= 1;
@@ -120,6 +108,7 @@ public abstract class Actor extends Entity implements Collision
                 m_x += 1;
             case right:
                 m_x -= 1;
+            case no:
         }
     }
 }

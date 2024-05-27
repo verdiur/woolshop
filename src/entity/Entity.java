@@ -44,4 +44,9 @@ public abstract class Entity
 	 * @param g2 contexte graphique
 	 */
 	public abstract void draw(Graphics2D g2);
+
+	/**
+	 * Méthode abstraite update.
+	 */
+	public abstract void update();
 }

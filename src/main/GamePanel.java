@@ -3,12 +3,15 @@ package main;
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
 // import actor.TileManager;
 import actor.Player;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * Panel principal du jeu contenant la map principale
@@ -29,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int m_FPS;
 	
 	// Cr�ation des diff�rentes instances (Player, KeyHandler, TileManager, GameThread ...)
-	KeyHandler m_keyH;
+	// KeyHandler m_keyH;
 	Thread m_gameThread;
 	Player m_player;
 	// TileManager m_tileM;
@@ -39,14 +42,22 @@ public class GamePanel extends JPanel implements Runnable{
 	 */
 	public GamePanel() {
 		m_FPS = 60;				
-		m_keyH = new KeyHandler();
-		m_player = new Player(this, m_keyH);
-		m_tileM = new TileManager(this);
+		// m_keyH = new KeyHandler();
+		
+		BufferedImage player_sprite = 
+			ImageIO.read(getClass().getResource("/superhero.png"));
+		m_player = new Player(
+			this, 
+			2, 
+			2,
+			player_sprite
+		);
+		// m_tileM = new TileManager(this);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
-		this.addKeyListener(m_keyH);
+		// this.addKeyListener(m_keyH);
 		this.setFocusable(true);
 	}
 	
@@ -104,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		m_tileM.draw(g2);
+		// m_tileM.draw(g2);
 		m_player.draw(g2);
 		g2.dispose();
 	}
