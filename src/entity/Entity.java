@@ -1,13 +1,36 @@
 package entity;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 
 /**
- * Entité de base du jeu
- *
+ * EntitÃ© de base du jeu
  */
-public abstract class Entity {
-	public int m_x, m_y;				//position sur la map
-	public int m_speed;					//Déplacement de l'entité
-	public BufferedImage m_idleImage;	//Une image de l'entité
+public abstract class Entity
+{
+	private float m_x;
+	private float m_y;
+
+	/**
+	 * Constructeur de classe.
+	 * @param x position x
+	 * @param y position y
+	 */
+	public Entity(float x, float y) {
+		m_x = x;
+		m_y = y;
+	}
+
+	public float getX() {
+		return m_x;
+	}
+
+	public float getY() {
+		return m_y;
+	}
+
+	/**
+	 * MÃ©thode abstraite de dessin.
+	 * @param g2 contexte graphique
+	 */
+	public abstract void draw(Graphics2D g2);
 }

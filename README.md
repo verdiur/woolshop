@@ -18,9 +18,9 @@ classDiagram
     class Entity {
         +float m_x
         +float m_y
-        +Map~Vector~Img~~ m_sprite_dict
-        +draw() void
+        +draw(Graphics2D g2)* void
     }
+    <<abstract>> Entity
 
     class Collision {
         +does_collide(Entity ent)* bool
@@ -28,11 +28,13 @@ classDiagram
     <<interface>> Collision
 
     class Actor {
+        +HashMap~ArrayList~ImageBuffer~~ m_sprite_map
         +m_speed
         +move(DirEnum dir) void
     }
 
     class Tile {
+        ImageBuffer m_sprite
     }
 
     class GameObj_placeholder_name {
