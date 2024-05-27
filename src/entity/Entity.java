@@ -1,25 +1,36 @@
 package entity;
 
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 /**
  * Entité de base du jeu
  */
 public abstract class Entity
 {
-	public float m_x;
-	public float m_y;
-	public HashMap<
-		String, 
-		ArrayList<BufferedImage>
-	> m_sprite_map;
+	private float m_x;
+	private float m_y;
 
 	/**
-	 * Dessin par défaut, à changer si animations
-	 * @param g2
+	 * Constructeur de classe.
+	 * @param x position x
+	 * @param y position y
+	 */
+	public Entity(float x, float y) {
+		m_x = x;
+		m_y = y;
+	}
+
+	public float getX() {
+		return m_x;
+	}
+
+	public float getY() {
+		return m_y;
+	}
+
+	/**
+	 * Méthode abstraite de dessin.
+	 * @param g2 contexte graphique
 	 */
 	public abstract void draw(Graphics2D g2);
 }
