@@ -28,13 +28,13 @@ classDiagram
     <<interface>> Collision
 
     class Actor {
-        +HashMap~ArrayList~ImageBuffer~~ m_sprite_map
+        +HashMap~ArrayList~BufferedImage~~ m_sprite_map
         +m_speed
         +move(DirEnum dir) void
     }
 
     class Tile {
-        ImageBuffer m_sprite
+        BufferedImage m_sprite
     }
 
     class GameObj_placeholder_name {

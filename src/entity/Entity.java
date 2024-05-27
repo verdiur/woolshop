@@ -7,15 +7,15 @@ import java.awt.Graphics2D;
  */
 public abstract class Entity
 {
-	private float m_x;
-	private float m_y;
+	protected int m_x;
+	protected int m_y;
 
 	/**
 	 * Constructeur de classe.
 	 * @param x position x
 	 * @param y position y
 	 */
-	public Entity(float x, float y) {
+	public Entity(int x, int y) {
 		m_x = x;
 		m_y = y;
 	}
