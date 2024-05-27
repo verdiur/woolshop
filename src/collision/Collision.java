@@ -1,5 +1,6 @@
 package collision;
 import entity.Entity;
+import main.DirEnum;
 
 public interface Collision{
 
@@ -8,5 +9,5 @@ public interface Collision{
      * @param entity entité à vérifier
      * @return oui ou non
      */
-    public boolean doesCollide(Entity entity);
+    public boolean doesCollide(Entity entity, DirEnum signal);
 }
