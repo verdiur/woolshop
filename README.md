@@ -23,15 +23,19 @@ classDiagram
     <<abstract>> Entity
 
     class Collision {
-        +does_collide(Entity ent)* bool
+        +isColliding(Entity ent, DirEnum dir)* bool
+        +isNext(Entity ent)* bool
+        +isAt(Entity ent, DirEnum dir)* bool
     }
     <<interface>> Collision
 
     class Actor {
         +HashMap~ArrayList~BufferedImage~~ m_sprite_map
-        +m_speed
+        +GamePanel m_gp
+        +draw(Graphics2D g2)* void
         +move(DirEnum dir) void
     }
+    <<abstract>> Actor
 
     class Tile {
         BufferedImage m_sprite
@@ -67,3 +71,14 @@ classDiagram
 
     Actor <|-- Player
 ```
+
+## Structure du projet
+- `bin/` contient les binaires.
+- `res/` contient les ressources.
+- `src/` contient le code source :
+    - `util/` contient des éléments utilitaires.
+    - `main/` contient le programme principal.
+    - `entity/` contient la classe `Entity` et ses classes filles directes (`Tile` et `Actor`).
+    - `tile/` contient les classes filles de `Tile`.
+    - `actor/` contient les classes filles de `Actor`.
+    - `collision/` contient `Collision`.
