@@ -53,19 +53,19 @@ public abstract class Actor extends Entity implements Collision
     public void move(DirEnum signal) {
         switch(signal) {
             case up:
-                if (getY() < m_gp.TILE_SIZE) {
+                if (m_y < m_gp.TILE_SIZE) {
                     m_y += 1;
 				}
             case down:
-                if (getY() > 0) {
+                if (m_y > 0) {
 					m_y -= 1;
 				}
             case left:
-                if (getX() < m_gp.TILE_SIZE) {
+                if (m_x < m_gp.TILE_SIZE) {
 					m_x += 1;
 				}
             case right:
-                if (getY()>0) {
+                if (m_x > 0) {
 					m_x -= 1;
                 }
         }
