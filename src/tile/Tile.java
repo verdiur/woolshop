@@ -12,15 +12,29 @@ public class Tile extends Entity
      * Constructeur de classe.
      * @param x position x en tiles
      * @param y position y en tiles
-     * @param sprite
+     * @param sprite sprite
      */
     public Tile(int x, int y, BufferedImage sprite) {
         super(x, y);
         m_sprite = sprite;
     }
 
+    /**
+     * Constructeur de classe. Nécessite de charger le sprite séparément.
+     * @param x position x en tiles
+     * @param y position y en tiles
+     */
+    public Tile(int x, int y) {
+        super(x, y);
+        m_sprite = null;
+    }
+
     public BufferedImage getSprite() {
         return m_sprite;
+    }
+
+    public void setSprite(BufferedImage sprite) {
+        m_sprite = sprite;
     }
 
     public void draw(Graphics2D g2) {
