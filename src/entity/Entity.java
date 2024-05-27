@@ -1,13 +1,25 @@
 package entity;
 
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * Entité de base du jeu
- *
+ * EntitÃ© de base du jeu
  */
-public abstract class Entity {
-	public int m_x, m_y;				//position sur la map
-	public int m_speed;					//Déplacement de l'entité
-	public BufferedImage m_idleImage;	//Une image de l'entité
+public abstract class Entity
+{
+	public float m_x;
+	public float m_y;
+	public HashMap<
+		String, 
+		ArrayList<BufferedImage>
+	> m_sprite_map;
+
+	/**
+	 * Dessin par dÃ©faut, Ã  changer si animations
+	 * @param g2
+	 */
+	public abstract void draw(Graphics2D g2);
 }
