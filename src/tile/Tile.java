@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import entity.Entity;
 import main.GamePanel;
 
+/**
+ * Entité sans mouvement
+ */
 public class Tile extends Entity
 {
     protected GamePanel m_gp;
