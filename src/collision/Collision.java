@@ -5,9 +5,10 @@ import utils.DirEnum;
 public interface Collision{
 
     /**
-     * Vérifier si on touche un "obstacle"
+     * Vérifier si on touche un "obstacle" dans une direction
      * @param entity entité à vérifier
+     * @param dir direction
      * @return oui ou non
      */
-    public boolean doesCollide(Entity entity, DirEnum signal);
+    public boolean isColliding(Entity entity, DirEnum dir);
 }
