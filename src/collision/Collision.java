@@ -3,6 +3,10 @@ import entity.Entity;
 
 public interface Collision{
 
-    //vérifie si un objet touche un "obstacle"
+    /**
+     * Vérifier si on touche un "obstacle"
+     * @param entity entité à vérifier
+     * @return oui ou non
+     */
     public boolean doesCollide(Entity entity);
 }
