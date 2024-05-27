@@ -10,8 +10,8 @@ public class Tile extends Entity
 
     /**
      * Constructeur de classe.
-     * @param x
-     * @param y
+     * @param x position x en tiles
+     * @param y position y en tiles
      * @param sprite
      */
     public Tile(int x, int y, BufferedImage sprite) {

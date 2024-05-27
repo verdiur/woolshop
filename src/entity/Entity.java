@@ -12,8 +12,8 @@ public abstract class Entity
 
 	/**
 	 * Constructeur de classe.
-	 * @param x position x
-	 * @param y position y
+	 * @param x position x en tiles
+	 * @param y position y en tiles
 	 */
 	public Entity(int x, int y) {
 		m_x = x;
