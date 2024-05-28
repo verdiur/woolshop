@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
 // import actor.TileManager;
 import actor.Player;
+import tile.TileManager;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -42,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 	 */
 	public GamePanel() {
 		m_FPS = 60;				
+
 		// m_keyH = new KeyHandler();
 
 		BufferedImage player_sprite = null;
@@ -57,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
 			2,
 			player_sprite
 		);
+
 		m_tileM = new TileManager(this);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -111,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable{
 	 * Mise à jour des données des entités
 	 */
 	public void update() {
-		m_player.update();
+		// m_player.update();
 	}
 	
 	/**
@@ -121,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		m_tileM.draw(g2);
-		m_player.draw(g2);
+		// m_player.draw(g2);
 		g2.dispose();
 	}
 	
