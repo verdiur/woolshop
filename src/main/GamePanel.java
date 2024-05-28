@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 // import actor.TileManager;
 import actor.Player;
+import tile.TileManager;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,8 +32,8 @@ public class GamePanel extends JPanel implements Runnable{
 	// Cr�ation des diff�rentes instances (Player, KeyHandler, TileManager, GameThread ...)
 	KeyHandler m_keyH;
 	Thread m_gameThread;
-	Player m_player;
-	// TileManager m_tileM;
+	// Player m_player;
+	TileManager m_tileM;
 		
 	/**
 	 * Constructeur
@@ -40,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public GamePanel() {
 		m_FPS = 60;				
 		m_keyH = new KeyHandler();
-		m_player = new Player(this, m_keyH);
+		// m_player = new Player(this, m_keyH);
 		m_tileM = new TileManager(this);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -95,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable{
 	 * Mise à jour des données des entités
 	 */
 	public void update() {
-		m_player.update();
+		// m_player.update();
 	}
 	
 	/**
@@ -105,7 +106,7 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		m_tileM.draw(g2);
-		m_player.draw(g2);
+		// m_player.draw(g2);
 		g2.dispose();
 	}
 	
