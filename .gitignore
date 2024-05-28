@@ -27,7 +27,7 @@ replay_pid*
 .temp
 
 # binaries
-bin/
+bin
 
 # intelliJ junk
-.idea/
+.idea
