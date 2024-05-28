@@ -11,7 +11,8 @@ public class RandomClientState extends ClientState{
     private int m_y;
     private int m_time;
     private DirEnum m_dir;
-    public static final int MAX_TEMP = 10; 
+    public static final int MAX_TEMP = 10;
+    Random rdm = new Random();
 
     public RandomClientState(int x, int y){
         m_x = x;
@@ -44,20 +45,31 @@ public class RandomClientState extends ClientState{
      */
     public void Update(){
         if (m_time != 0){
-            Random rdm = new Random();
-            switch(rdm.nextInt(4)){
+            
+            int k = rdm.nextInt(0,4);
+            System.out.println(k);
+            switch(k){
                 case 0:
-                    m_dir = DirEnum.up;
+                    m_x ++;
+                    break;
                 case 1:
-                    m_dir = DirEnum.down;
+                    m_x --;
+                    break;
                 case 2:
-                    m_dir = DirEnum.left;
+                    m_y --;
+                    break;
                 case 3:
-                    m_dir = DirEnum.right;
+                    m_y ++;
+                    break;
             }
+            System.out.print("m_x = ");
+            System.out.print(m_x);
+            System.out.print("; m_y = ");
+            System.out.println(m_y);
             m_time --; 
         } else {
             super.m_transition = true;
+            System.out.println("coucou je transition");
             super.m_transition_name = "path";
         }
     }
@@ -69,5 +81,13 @@ public class RandomClientState extends ClientState{
 
     public DirEnum getDir(){
         return m_dir;
+    }
+
+    public int getX(){
+        return m_x;
+    }
+
+    public int getY(){
+        return m_y;
     }
 }

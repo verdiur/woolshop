@@ -9,6 +9,7 @@ public class PathClientState extends ClientState{
     private int m_y;
     private int m_xdest;
     private int m_ydest;
+    private DirEnum m_dir = DirEnum.no;
     
     public PathClientState(int x, int y, int x_dest, int y_dest){
         m_x = x;
@@ -16,7 +17,7 @@ public class PathClientState extends ClientState{
         m_xdest = x_dest;
         m_ydest = y_dest;
         super.m_name = "path";
-        super.m_transition = false;        
+        super.m_transition = false;    
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat
@@ -39,9 +40,11 @@ public class PathClientState extends ClientState{
      * Methode qui execute les actions correspondant à l'update de l'etat
      */
     public void Update(){
+        // System.out.println("a");
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
             super.m_transition_name = "rdm";
+            m_dir = DirEnum.no;
         } else {
             if (m_x < m_xdest){
                 m_x ++;
@@ -53,11 +56,12 @@ public class PathClientState extends ClientState{
                 m_y --;
             }
         }
+        // System.out.println(m_dir);
     }
 
-    // public DirEnum getDir(){
-    //     return m_dir;
-    // }
+    public DirEnum getDir(){
+        return m_dir;
+    }
 
     public void setPose(int x, int y){
         m_x = x;

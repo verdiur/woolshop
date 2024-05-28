@@ -6,12 +6,16 @@ import javax.swing.JPanel;
 import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
 import actor.Player;
+import actor.Client;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Date;
 
 /**
  * Panel principal du jeu contenant la map principale
@@ -37,12 +41,24 @@ public class GamePanel extends JPanel implements Runnable{
 	Player m_player;
 	TileManager m_tileM;
 	KeyListener m_keyH;
+	Client m_client;
+	Timer m_timer;
+
 		
 	/**
 	 * Constructeur
 	 */
 	public GamePanel() {
-		m_FPS = 60;				
+		m_FPS = 60;
+		m_timer = new Timer();
+		TimerTask t_update = new TimerTask() {
+			public void run(){
+				update_time();
+			}
+		};
+
+		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
+
 
 		m_keyH = new KeyHandler();
 
@@ -59,6 +75,23 @@ public class GamePanel extends JPanel implements Runnable{
 			2,
 			player_sprite
 		);
+
+		BufferedImage client_sprite = null;
+		try {
+			client_sprite =
+			ImageIO.read(getClass().getResource("/player/testclient.png"));
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		m_client = new Client(
+			this, 
+			3, 
+			4,
+			client_sprite
+		);
+
+
+
 
 		m_tileM = new TileManager(this);
 		
@@ -116,6 +149,15 @@ public class GamePanel extends JPanel implements Runnable{
 	 */
 	public void update() {
 		m_player.update();
+			
+
+	}
+
+	public void update_time(){
+		if (m_client != null){
+			m_client.update();
+		}
+		
 	}
 	
 	/**
@@ -126,6 +168,7 @@ public class GamePanel extends JPanel implements Runnable{
 		Graphics2D g2 = (Graphics2D) g;
 		m_tileM.draw(g2);
 		m_player.draw(g2);
+		m_client.draw(g2);
 		g2.dispose();
 	}
 	

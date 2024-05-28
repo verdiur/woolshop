@@ -82,7 +82,6 @@ public class ClientStateMachine{
      * @param new_state reference le nom du nouvel etat
      */
     public void child_transition(String state, String new_state){
-
         // verifie si on transitionne bien de l'etat actuel vers un nouvel etat
         if (m_current_state != m_states.get(state) || state == new_state ) { // A rajouter verifier que new_state est bien compris dans l'enum
             System.out.println("StateMachine error");
@@ -90,6 +89,7 @@ public class ClientStateMachine{
         }
         else
         {
+            
             m_current_state.Exit();
 
             int x = m_current_state.getX();

@@ -70,8 +70,20 @@ public class Client extends Actor
 
     public void update(){
         m_state.Update();
-        move(m_state.getState().getDir());
+        super.m_x = m_state.getState().getX();
+        super.m_y = m_state.getState().getY();
+        /*System.out.print("m_x = ");
+        System.out.print(m_x);
+        System.out.print("; m_y = ");
+        System.out.println(m_y);*/
         m_state.getState().setPose(m_x, m_y);
+        
+
+        /*if (m_x == 3){
+            m_x = 4;
+        } else{
+            m_x = 3;
+        }*/
     }
 }
 
