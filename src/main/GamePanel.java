@@ -51,15 +51,66 @@ public class GamePanel extends JPanel implements Runnable{
 	Client m_client;
 	Timer m_timer;
 
+	int m_current_room = 1;
+
 	/** Conteneur pour toutes les entités */
-	ArrayList<Entity> m_entity_arr;
+	ArrayList<Entity> m_entity_arr_room1;
 	/** Conteneur pour les Actors (bougent) */
-	ArrayList<Actor> m_actor_arr;
+	ArrayList<Actor> m_actor_arr_room1;
 	/** Conteneur pour les Tiles (bougent pas) */
-	ArrayList<Tile> m_tile_arr;
+	ArrayList<Tile> m_tile_arr_room1;
 	/** Conteneur d'entités ayant collision */
-	ArrayList<Entity> m_collision_arr;
-		
+	ArrayList<Entity> m_collision_arr_room1;
+	
+	/** Conteneur pour toutes les entités */
+	ArrayList<Entity> m_entity_arr_room2;
+	/** Conteneur pour les Actors (bougent) */
+	ArrayList<Actor> m_actor_arr_room2;
+	/** Conteneur pour les Tiles (bougent pas) */
+	ArrayList<Tile> m_tile_arr_room2;
+	/** Conteneur d'entités ayant collision */
+	ArrayList<Entity> m_collision_arr_room2;
+
+	public ArrayList<Entity> getEntities() {
+		switch(m_current_room) {
+			case 1:
+				return m_entity_arr_room1;
+			case 2:
+				return m_entity_arr_room2;
+		}
+		return null;
+	}
+
+	public ArrayList<Actor> getActors() {
+		switch(m_current_room) {
+			case 1:
+				return m_actor_arr_room1;
+			case 2:
+				return m_actor_arr_room2;
+		}
+		return null;
+	}
+
+	public ArrayList<Tile> getTiles() {
+		switch(m_current_room) {
+			case 1:
+				return m_tile_arr_room1;
+			case 2:
+				return m_tile_arr_room2;
+		}
+		return null;
+	}
+
+	public ArrayList<Entity> getCollisions() {
+		switch(m_current_room) {
+			case 1:
+				return m_collision_arr_room1;
+			case 2:
+				return m_collision_arr_room2;
+		}
+		return null;
+	}
+
 	/**
 	 * Constructeur
 	 */
@@ -105,27 +156,43 @@ public class GamePanel extends JPanel implements Runnable{
 			client_sprite
 		);
 
-		/** Conteneurs d'entités */
-		m_entity_arr = new ArrayList<Entity>();
-		m_actor_arr = new ArrayList<Actor>();
-		m_tile_arr = new ArrayList<Tile>();
-		m_collision_arr = new ArrayList<Entity>();
-		
-		m_entity_arr.add(m_player);
-		m_actor_arr.add(m_player);
-		m_collision_arr.add(m_player);
+		/** Conteneurs d'entités room 1 */
+		m_entity_arr_room1 = new ArrayList<Entity>();
+		m_actor_arr_room1 = new ArrayList<Actor>();
+		m_tile_arr_room1 = new ArrayList<Tile>();
+		m_collision_arr_room1 = new ArrayList<Entity>();
+
+		/** Conteneurs d'entités room 2 */
+		m_entity_arr_room2 = new ArrayList<Entity>();
+		m_actor_arr_room2 = new ArrayList<Actor>();
+		m_tile_arr_room2 = new ArrayList<Tile>();
+		m_collision_arr_room2 = new ArrayList<Entity>();
+
+		/** MapManager */
+		m_map_manager = new MapManager(this);
+
+		switch(m_current_room) {
+			case 1:
+				m_entity_arr_room1.add(m_player);
+				m_actor_arr_room1.add(m_player);
+				m_collision_arr_room1.add(m_player);
+				m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+				break;
+			case 2:
+				m_entity_arr_room2.add(m_player);
+				m_actor_arr_room2.add(m_player);
+				m_collision_arr_room2.add(m_player);
+				m_map_manager.loadMap("/maps/map2.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+				break;
+		}
+
 
 		// m_entity_arr.add(m_client);
 		// m_actor_arr.add(m_client);
 		// m_collision_arr.add(m_client);
 
-		System.out.println(m_entity_arr);
+		// System.out.println(m_entity_arr_room1);
 
-		/** MapManager */
-		m_map_manager = new MapManager(this);
-		m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
-
-		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
@@ -179,14 +246,49 @@ public class GamePanel extends JPanel implements Runnable{
 	 * Mise à jour des données des entités
 	 */
 	public void update() {
-		for (Entity e: m_entity_arr) {
-			e.update(m_actor_arr, m_tile_arr, m_collision_arr);
+		switch(m_current_room) {
+			case 1:
+				for (Entity e: m_entity_arr_room1) {
+					e.update(m_actor_arr_room1, m_tile_arr_room1, m_collision_arr_room1);
+				}
+				break;
+			case 2:
+				for (Entity e: m_entity_arr_room2) {
+					e.update(m_actor_arr_room2, m_tile_arr_room2, m_collision_arr_room2);
+				}
+				break;
 		}
+
+		if (m_player.getX() == (int)0 && m_player.getY() == (int)1 && m_current_room == 1) {
+			m_current_room = 2;
+			m_entity_arr_room1.remove(m_player);
+			m_actor_arr_room1.remove(m_player);
+			m_collision_arr_room1.remove(m_player);
+			m_entity_arr_room2.add(m_player);
+			m_actor_arr_room2.add(m_player);
+			m_collision_arr_room2.add(m_player);
+			m_player.setX(MAX_SCREEN_COL - 2);
+			m_player.setY(1);
+			m_map_manager.loadMap("/maps/map2.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+		}
+		else if (m_player.getX() == MAX_SCREEN_COL-1 && m_player.getY() == (int)1 && m_current_room == 2) {
+			m_current_room = 1;
+			m_entity_arr_room2.remove(m_player);
+			m_actor_arr_room2.remove(m_player);
+			m_collision_arr_room2.remove(m_player);
+			m_entity_arr_room1.add(m_player);
+			m_actor_arr_room1.add(m_player);
+			m_collision_arr_room1.add(m_player);
+			m_player.setX(1);
+			m_player.setY(1);
+			m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+		}
+
   	}
 
 	public void update_time() {
 		if (m_client != null) {
-			m_client.update(m_actor_arr, m_tile_arr, m_collision_arr);
+			m_client.update(m_actor_arr_room1, m_tile_arr_room1, m_collision_arr_room1);
 		}
 	}
   
@@ -199,14 +301,27 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		// affichage tiles
-		for (Entity e: m_tile_arr) {
-			e.draw(g2);
+		switch(m_current_room) {
+			case 1:
+				for (Entity e: m_tile_arr_room1) {
+					e.draw(g2);
+				}
+				// affichage actors par dessus les tiles
+				for (Entity e: m_actor_arr_room1) {
+					e.draw(g2);
+				}
+				m_client.draw(g2);
+				break;
+			case 2:
+				for (Entity e: m_tile_arr_room2) {
+					e.draw(g2);
+				}
+				// affichage actors par dessus les tiles
+				for (Entity e: m_actor_arr_room2) {
+					e.draw(g2);
+				}
+				break;
 		}
-		// affichage actors par dessus les tiles
-		for (Entity e: m_actor_arr) {
-			e.draw(g2);
-		}
-		m_client.draw(g2);
 		g2.dispose();
 	}
 }
