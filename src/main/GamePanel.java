@@ -267,9 +267,11 @@ public class GamePanel extends JPanel implements Runnable{
 			m_entity_arr_room2.add(m_player);
 			m_actor_arr_room2.add(m_player);
 			m_collision_arr_room2.add(m_player);
+			m_player.setX(MAX_SCREEN_COL - 2);
+			m_player.setY(1);
 			m_map_manager.loadMap("/maps/map2.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 		}
-		else if (m_player.getX() == MAX_SCREEN_ROW-1 && m_player.getY() == (int)1 && m_current_room == 2) {
+		else if (m_player.getX() == MAX_SCREEN_COL-1 && m_player.getY() == (int)1 && m_current_room == 2) {
 			m_current_room = 1;
 			m_entity_arr_room2.remove(m_player);
 			m_actor_arr_room2.remove(m_player);
@@ -277,6 +279,8 @@ public class GamePanel extends JPanel implements Runnable{
 			m_entity_arr_room1.add(m_player);
 			m_actor_arr_room1.add(m_player);
 			m_collision_arr_room1.add(m_player);
+			m_player.setX(1);
+			m_player.setY(1);
 			m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 		}
 
