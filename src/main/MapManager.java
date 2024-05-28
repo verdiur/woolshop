@@ -54,39 +54,37 @@ public class MapManager {
                             break;
                         }
                         case 1: {
+                            break;
+                        }
 
-                            try { s = ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")); }
-
+                        case 2: {
+                            // floor
+                            try { s = ImageIO.read(getClass().getResource("/tiles/FLOORSHADOW.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
                             e = new Tile(m_gp, row, col, s);
                             m_gp.m_entity_arr.add(e);
-                            break;
-                        }
-                        case 2: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/SHELF.png")); }
-                            catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Wall(m_gp, row, col, s);
-                            m_gp.m_entity_arr.add(e);
                             m_gp.m_tile_arr.add(e);
-                            m_gp.m_collision_arr.add(e);
                             break;
                         }
+
+
                         case 3: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/COUNTER.png")); }
-                            catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Wall(m_gp, row, col, s);
-                            m_gp.m_entity_arr.add(e);
-                            m_gp.m_tile_arr.add(e);
-                            m_gp.m_collision_arr.add(e);
-                            break;
-                        }
-                        case 4: {
                             try { s = ImageIO.read(getClass().getResource("/tiles/TAPIS.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
                             e = new Wall(m_gp, row, col, s);
                             m_gp.m_entity_arr.add(e);
                             m_gp.m_tile_arr.add(e);
                             m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 4: {
+                            // floor
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERBOTTOMLEFT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Tile(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
                             break;
                         }
 
@@ -121,7 +119,137 @@ public class MapManager {
                         }
 
                         case 8: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERWALL.png")); }
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERBOTTOMRIGHT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 9: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERTOPRIGHT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 10: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERTOPRIGHT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 11: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERTOPLEFT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 12: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/DOORDOWNLEFT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 13: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/DOORDOWNRIGHT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 14: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/DOORTOPLEFT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 15: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/DOORTOPRIGHT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 16: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/DOORUPLEFT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 17: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/DOORUPRIGHT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 20: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CHEST.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 21: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CRAB.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+
+                        case 22: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/SHELF.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
+                            m_gp.m_collision_arr.add(e);
+                            break;
+                        }
+                        
+                        case 23: {
+                            try { s = ImageIO.read(getClass().getResource("/tiles/COUNTER.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
                             e = new Wall(m_gp, row, col, s);
                             m_gp.m_entity_arr.add(e);
