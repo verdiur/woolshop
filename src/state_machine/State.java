@@ -1,16 +1,15 @@
 package state_machine;
 
+/**
+ * Classe dont le rôle est de gerer le fonctionnement d'un etat à l'aide de
+ * 3 méthodes principales.
+ * 
+ * Enter() : actions et changements de paramètres de l'entité à l'entrée dans l'état
+ * Exit() : actions et changements de paramètres de l'entité à la sortie de l'état
+ * Update() : actions et changements de paramètres de l'entité à chaque Update
+ */
 public abstract class State {
-    /*
-
-    Classe dont le rôle est de gerer le fonctionnement d'un etat à l'aide de
-    3 méthodes principales.
-
-    Enter() : actions et changements de paramètres de l'entité à l'entrée dans l'état
-    Exit() : actions et changements de paramètres de l'entité à la sortie de l'état
-    Update() : actions et changements de paramètres de l'entité à chaque Update
-
-     */
+    
 
     // Le nom de l'état qui sera appelé par la StateMachine
     // A définir dans le constructeur de la classe fille
@@ -27,19 +26,19 @@ public abstract class State {
     /**
      * Methode qui execute les actions correspondant à l'entrée dans l'etat
      */
-    public void Enter(){}
+    public abstract void Enter();
     // Definie l'ensemble des executions à la sortie de l'état
     // A définir dans la classe fille
     /**
      * Methode qui execute les actions correspondant à la sortie de l'etat
      */
-    public void Exit(){}
+    public abstract void Exit();
     // Definie l'ensemble des exécutions à chaque Update de l'état
     // A définir dans la classe fille
     /**
      * Methode qui execute les actions correspondant à l'update de l'etat
      */
-    public void Update(){}
+    public abstract void Update();
 
     // Getter permettant de vérifier si on exécute une transition
     /**

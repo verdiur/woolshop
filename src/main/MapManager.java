@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
-import entity.Entity;
 import entity.Tile;
 import tile.Wall;
 
@@ -51,10 +50,13 @@ public class MapManager {
                             catch (IOException ioe1) { System.out.println(ioe1); }
                             e = new Tile(m_gp, row, col, s);
                             m_gp.m_entity_arr.add(e);
+                            m_gp.m_tile_arr.add(e);
                             break;
                         }
                         case 1: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/FLOOR.png")); }
+
+                            try { s = ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")); }
+
                             catch (IOException ioe1) { System.out.println(ioe1); }
                             e = new Tile(m_gp, row, col, s);
                             m_gp.m_entity_arr.add(e);

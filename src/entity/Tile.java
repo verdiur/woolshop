@@ -51,7 +51,7 @@ public class Tile extends Entity
      * Méthode de dessin.
      */
     @Override
-     public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2) {
         g2.drawImage(
             m_sprite, 
             m_x * m_gp.TILE_SIZE, 

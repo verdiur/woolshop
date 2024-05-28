@@ -2,7 +2,9 @@ package state_machine;
 
 import java.util.Map;
 
-public class StateMachine {
+import state.*;
+
+public class ClientStateMachine{
 
     /*
 
@@ -20,9 +22,9 @@ public class StateMachine {
      */
 
     // Map comprenant l'ensemble des etat ainsi que les String permettant de les appeler
-    private Map<String,State> m_states;
+    private Map<String, ClientState> m_states;
     // State definissant l'etat actuel (celui sur lequel Update est appeler)
-    private State m_current_state;
+    private ClientState m_current_state;
 
     // Appelle le constructeur de la StateMachine en definissant un premier current_state et la map comprenant tout les etats
     // La Map est à définire dans le constructeur
@@ -31,7 +33,7 @@ public class StateMachine {
      * @param initial_state reference le nom de l'etat initial : String
      * @param states reference la Hashmap : Map<String,State>
      */
-    public StateMachine(String initial_state, Map<String,State> states ){
+    public ClientStateMachine(String initial_state, Map<String, ClientState> states ){
         m_states = states;
         ready(m_states.get(initial_state));
     }
@@ -41,7 +43,7 @@ public class StateMachine {
      * Methode qui initialise l'etat courrant
      * @param state reference l'etat initiale : State
      */
-    private void ready(State state){
+    private void ready(ClientState state){
         m_current_state = state;
         m_current_state.Enter();
     }
@@ -51,7 +53,7 @@ public class StateMachine {
     /**
      * Getter de l'etat actuel
      */
-    public State getState(){
+    public ClientState getState(){
         return m_current_state;
     }
 
@@ -81,21 +83,26 @@ public class StateMachine {
      * @param new_state reference le nom du nouvel etat
      */
     public void child_transition(String state, String new_state){
-
         // verifie si on transitionne bien de l'etat actuel vers un nouvel etat
-        if (m_current_state != m_states.get(state) || state == new_state )          // A rajouter verifier que new_state est bien compris dans l'enum
-        { 
+        if (m_current_state != m_states.get(state) || state == new_state ) { // A rajouter verifier que new_state est bien compris dans l'enum
             System.out.println("StateMachine error");
             return;
         }
         else
         {
             m_current_state.Exit();
+
+            int x = m_current_state.getX();
+            int y = m_current_state.getY();
+
             m_current_state = m_states.get(new_state);
+
+            m_current_state.setPose(x, y); 
             m_current_state.Enter();
         }
 
 
     }
 }
+
 
