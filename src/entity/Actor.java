@@ -16,6 +16,7 @@ public abstract class Actor extends Entity implements Collision
     protected HashMap<String, ArrayList<BufferedImage>> m_sprite_map;
     protected GamePanel m_gp;
     protected boolean m_can_move;
+    protected boolean has_moved = false;
 
     /**
      * Constructeur de classe. Nécessite de charger le sprite_map séparément.
@@ -93,6 +94,10 @@ public abstract class Actor extends Entity implements Collision
                 return false;
         }
     }
+
+    public void setMoved(boolean moved) {
+        has_moved = moved;
+    }
     
     /**
      * Se déplacer dans une direction. Pour l'instant move() fait se téléporter
@@ -103,13 +108,29 @@ public abstract class Actor extends Entity implements Collision
     public void move(DirEnum dir) {
         switch(dir) {
             case up:
-                m_y -= 1;
+                if (!has_moved) {
+                    m_y -= 1;
+                    has_moved = true;
+                    break;
+                }
             case down:
-                m_y += 1;
+                if (!has_moved) {
+                    m_y += 1;
+                    has_moved = true;
+                    break;
+                }
             case left:
-                m_x += 1;
+                if (!has_moved) {
+                    m_x -= 1;
+                    has_moved = true;
+                    break;
+                }
             case right:
-                m_x -= 1;
+                if (!has_moved) {
+                    m_x += 1;
+                    has_moved = true;
+                    break;
+                }
             case no:
         }
     }

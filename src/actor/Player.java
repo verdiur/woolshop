@@ -3,6 +3,7 @@ package actor;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import entity.Actor;
@@ -55,15 +56,19 @@ extends Actor
         );
     }
 
-    @Override
     public void update() {
         DirEnum dir = m_ka.getDir();
         move(dir);
+
     }
 
     @Override
     public boolean isColliding(Entity entity) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    public KeyListener getKeyAdapter() {
+        return m_ka;
     }
 }
