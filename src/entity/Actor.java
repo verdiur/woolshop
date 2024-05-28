@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import collision.Collision;
 import main.GamePanel;
+import tile.GameObject;
 import util.DirEnum;
 
 /**
@@ -24,6 +25,7 @@ public abstract class Actor extends Entity implements Collision
      */
     public Actor(GamePanel a_gp, int x, int y) {
         super(x, y);
+        m_isPhysical = true;
         m_gp = a_gp;
         m_sprite_map = new HashMap<String, ArrayList<BufferedImage>>();
     }
@@ -55,13 +57,12 @@ public abstract class Actor extends Entity implements Collision
         m_sprite_map = sprite_map;
     }
 
-    @Override
-    public boolean isColliding(Entity entity, DirEnum dir) {
+    public boolean canMove(GameObject go, DirEnum dir) {
         return (
-            (dir == DirEnum.up && isAt(entity, DirEnum.down)) ||
-            (dir == DirEnum.down && isAt(entity, DirEnum.up)) ||
-            (dir == DirEnum.left && isAt(entity, DirEnum.right)) ||
-            (dir == DirEnum.right && isAt(entity, DirEnum.left))
+            (dir == DirEnum.up && isAt(go, DirEnum.down)) ||
+            (dir == DirEnum.down && isAt(go, DirEnum.up)) ||
+            (dir == DirEnum.left && isAt(go, DirEnum.right)) ||
+            (dir == DirEnum.right && isAt(go, DirEnum.left))
         );
     }
     
