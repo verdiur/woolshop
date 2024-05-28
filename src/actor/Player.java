@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import entity.Actor;
 import entity.Entity;
+import entity.Tile;
 import main.GamePanel;
 import util.DirEnum;
 
@@ -56,15 +57,16 @@ extends Actor
         );
     }
 
-    public void update() {
+    @Override
+    public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr) {
         DirEnum dir = m_ka.getDir();
-        move(dir);
-
+        if (canMove(collision_arr, dir)) {
+            move(dir);
+        }
     }
 
     @Override
     public boolean isColliding(Entity entity) {
-        // TODO Auto-generated method stub
         return false;
     }
 
