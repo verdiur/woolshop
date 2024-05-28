@@ -70,6 +70,7 @@ public abstract class Actor extends Entity implements Collision
             if (isAt(e, dir)) { return false; }
         }
         return true;
+
     }
     
     @Override
@@ -80,6 +81,11 @@ public abstract class Actor extends Entity implements Collision
             isAt(entity, DirEnum.up) ||
             isAt(entity, DirEnum.right)
         );
+    }
+
+    @Override
+    public boolean isColliding(Entity entity) {
+        return (m_x == entity.getX() && m_y == entity.getY());
     }
 
     @Override
