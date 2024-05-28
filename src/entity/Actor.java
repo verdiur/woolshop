@@ -59,12 +59,12 @@ public abstract class Actor extends Entity implements Collision
         m_sprite_map = sprite_map;
     }
 
-    public boolean canMove(GameObject go, DirEnum dir) {
+    public boolean  canMove(Entity ent, DirEnum dir) {
         return (
-            (dir == DirEnum.up && isAt(go, DirEnum.down)) ||
-            (dir == DirEnum.down && isAt(go, DirEnum.up)) ||
-            (dir == DirEnum.left && isAt(go, DirEnum.right)) ||
-            (dir == DirEnum.right && isAt(go, DirEnum.left))
+            (dir == DirEnum.up && isAt(ent, DirEnum.down)) ||
+            (dir == DirEnum.down && isAt(ent, DirEnum.up)) ||
+            (dir == DirEnum.left && isAt(ent, DirEnum.right)) ||
+            (dir == DirEnum.right && isAt(ent, DirEnum.left))
         );
     }
     
