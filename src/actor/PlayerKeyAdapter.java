@@ -30,24 +30,29 @@ public class PlayerKeyAdapter implements KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode();
-        switch (code) {
-            case 0x25:      // left
-                m_dir = DirEnum.left;
-            case 0x27:      // right
-                m_dir = DirEnum.right;
-            case 0x26:      // up
-                m_dir = DirEnum.up;
-            case 0x28:
-                m_dir = DirEnum.down;
-            /// TODO ajouter ici des contrôles supplémentaires...
-        }
+    public void keyReleased(KeyEvent e) {
+        m_player.setMoved(false);
+        m_dir = DirEnum.no;
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        m_dir = DirEnum.no;
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+        switch (code) {
+            case 0x25:   {}   // left
+                m_dir = DirEnum.left;
+                break;
+            case 0x27:      // right
+                m_dir = DirEnum.right;
+                break;
+            case 0x26:      // up
+                m_dir = DirEnum.up;
+                break;
+            case 0x28:
+                m_dir = DirEnum.down;
+                break;
+            /// TODO ajouter ici des contrôles supplémentaires...
+        }
     }
 
     @Override

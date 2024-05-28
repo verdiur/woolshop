@@ -5,12 +5,12 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
-// import actor.TileManager;
 import actor.Player;
 import tile.TileManager;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -37,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread m_gameThread;
 	Player m_player;
 	TileManager m_tileM;
+	KeyListener m_keyH;
 		
 	/**
 	 * Constructeur
@@ -44,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public GamePanel() {
 		m_FPS = 60;				
 
-		// m_keyH = new KeyHandler();
+		m_keyH = new KeyHandler();
 
 		BufferedImage player_sprite = null;
 		try {
@@ -65,7 +66,8 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
-		// this.addKeyListener(m_keyH);
+		this.addKeyListener(m_keyH);
+		this.addKeyListener(m_player.getKeyAdapter());
 		this.setFocusable(true);
 	}
 	
@@ -114,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable{
 	 * Mise à jour des données des entités
 	 */
 	public void update() {
-		// m_player.update();
+		m_player.update();
 	}
 	
 	/**
@@ -124,7 +126,7 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		m_tileM.draw(g2);
-		// m_player.draw(g2);
+		m_player.draw(g2);
 		g2.dispose();
 	}
 	
