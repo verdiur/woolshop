@@ -58,11 +58,6 @@ extends Actor
         super.draw(g2);
     }
 
-    @Override
-    public boolean isColliding(Entity entity) {
-        return false;
-    }
-
     public KeyListener getKeyAdapter() {
         return m_ka;
     }

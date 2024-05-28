@@ -45,7 +45,7 @@ public class RandomClientState extends ClientState {
         if (m_time != 0){
             
             int k = rdm.nextInt(0,4);
-            System.out.println(k);
+            // System.out.println(k);
             switch(k){
                 case 0:
                     m_x ++;
@@ -60,14 +60,14 @@ public class RandomClientState extends ClientState {
                     m_y ++;
                     break;
             }
-            System.out.print("m_x = ");
-            System.out.print(m_x);
-            System.out.print("; m_y = ");
-            System.out.println(m_y);
+            // System.out.print("m_x = ");
+            // System.out.print(m_x);
+            // System.out.print("; m_y = ");
+            // System.out.println(m_y);
             m_time --; 
         } else {
             super.m_transition = true;
-            System.out.println("coucou je transition");
+            // System.out.println("coucou je transition");
             super.m_transition_name = "path";
         }
     }
