@@ -1,38 +1,57 @@
 package main;
 
+import java.util.ArrayList;
+
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
-import entity.Player;
-import tile.TileManager;
+import entity.Entity;
+import entity.Actor;
+import entity.Tile;
+import actor.Player;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 
 /**
  * Panel principal du jeu contenant la map principale
- *
  */
 public class GamePanel extends JPanel implements Runnable{
 	
-	//ParamËtres de l'Ècran
-	final int ORIGINAL_TILE_SIZE = 16; 							// une tuile de taille 16x16
-	final int SCALE = 3; 										// Èchelle utilisÈe pour agrandir l'affichage
+	//Param√®tres de l'√©cran
+	final int ORIGINAL_TILE_SIZE = 32; 							// une tuile de taille 16x16
+	final int SCALE = 2; 										// √©chelle utilis√©e pour agrandir l'affichage
 	public final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; 	// 48x48
 	public final int MAX_SCREEN_COL = 16;
-	public final int MAX_SCREE_ROW = 12; 					 	// ces valeurs donnent une rÈsolution 4:3
+	public final int MAX_SCREEN_ROW = 12; 					 	// ces valeurs donnent une r√©solution 4:3
 	public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; // 768 pixels
-	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREE_ROW;	// 576 pixels
+	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;	// 576 pixels
 
 	// FPS : taux de rafraichissement
 	int m_FPS;
 	
-	// CrÈation des diffÈrentes instances (Player, KeyHandler, TileManager, GameThread ...)
-	KeyHandler m_keyH;
+	// Cr√©ation des diff√©rentes instances (Player, KeyHandler, TileManager, GameThread ...)
+	// KeyHandler m_keyH;
 	Thread m_gameThread;
 	Player m_player;
-	TileManager m_tileM;
+	// TileManager m_tileM;
+	MapManager m_map_manager;
+	KeyListener m_keyH;
+
+	/** Conteneur pour toutes les entit√©s */
+	ArrayList<Entity> m_entity_arr;
+	/** Conteneur pour les Actors (bougent) */
+	ArrayList<Actor> m_actor_arr;
+	/** Conteneur pour les Tiles (bougent pas) */
+	ArrayList<Tile> m_tile_arr;
+	/** Conteneur d'entit√©s ayant collision */
+	ArrayList<Entity> m_collision_arr;
 		
 	/**
 	 * Constructeur
@@ -40,13 +59,42 @@ public class GamePanel extends JPanel implements Runnable{
 	public GamePanel() {
 		m_FPS = 60;				
 		m_keyH = new KeyHandler();
-		m_player = new Player(this, m_keyH);
-		m_tileM = new TileManager(this);
+
+		/** Player */
+		BufferedImage player_sprite = null;
+		try {
+			player_sprite =
+			ImageIO.read(getClass().getResource("/player/bebert.png"));
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		m_player = new Player(
+			this, 
+			2, 
+			2,
+			player_sprite
+		);
+
+		/** Conteneurs d'entit√©s */
+		m_entity_arr = new ArrayList<Entity>();
+		m_actor_arr = new ArrayList<Actor>();
+		m_tile_arr = new ArrayList<Tile>();
+		m_collision_arr = new ArrayList<Entity>();
+		
+		m_entity_arr.add(m_player);
+		m_actor_arr.add(m_player);
+		m_collision_arr.add(m_player);
+
+		/** TileManager */
+		// m_tileM = new TileManager(this);
+		m_map_manager = new MapManager(this);
+		m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(m_keyH);
+		this.addKeyListener(m_player.getKeyAdapter());
 		this.setFocusable(true);
 	}
 	
@@ -65,13 +113,13 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		while(m_gameThread != null) { //Tant que le thread du jeu est actif
 			
-			//Permet de mettre ‡ jour les diffÈrentes variables du jeu
+			// Permet de mettre √† jour les diff√©rentes variables du jeu
 			this.update();
 			
-			//Dessine sur l'Ècran le personnage et la map avec les nouvelles informations. la mÈthode "paintComponent" doit obligatoirement Ítre appelÈe avec "repaint()"
+			// Dessine sur l'√©cran le personnage et la map avec les nouvelles informations. la m√©thode "paintComponent" doit obligatoirement √™tre appel√©e avec "repaint()"
 			this.repaint();
 			
-			//Calcule le temps de pause du thread
+			// Calcule le temps de pause du thread
 			try {
 				double remainingTime = nextDrawTime - System.nanoTime();
 				remainingTime = remainingTime/1000000;
@@ -84,7 +132,6 @@ public class GamePanel extends JPanel implements Runnable{
 				nextDrawTime += drawInterval;
 				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -92,19 +139,23 @@ public class GamePanel extends JPanel implements Runnable{
 	
 
 	/**
-	 * Mise ‡ jour des donnÈes des entitÈs
+	 * Mise √† jour des donn√©es des entit√©s
 	 */
 	public void update() {
-		m_player.update();
+		for (Entity e: m_entity_arr) {
+			e.update(m_actor_arr, m_tile_arr, m_collision_arr);
+		}
 	}
 	
 	/**
-	 * Affichage des ÈlÈments
+	 * Affichage des √©l√©ments
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		m_tileM.draw(g2);
+		for (Entity e: m_entity_arr) {
+			e.draw(g2);
+		}
 		m_player.draw(g2);
 		g2.dispose();
 	}

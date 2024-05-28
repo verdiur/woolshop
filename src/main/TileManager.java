@@ -1,4 +1,4 @@
-package tile;
+package main;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import main.GamePanel;
+import entity.Tile;
 
 /**
  * 
@@ -28,7 +28,7 @@ public class TileManager {
 	public TileManager(GamePanel gp) {
 		this.m_gp =  gp;
 		m_tile = new Tile[m_maxTiles];
-		m_mapTileNum = new int[gp.MAX_SCREEN_COL][gp.MAX_SCREE_ROW];
+		m_mapTileNum = new int[gp.MAX_SCREEN_COL][gp.MAX_SCREEN_ROW];
 		this.getTileImage();
 		this.loadMap("/maps/map2.txt");
 	}
@@ -38,23 +38,23 @@ public class TileManager {
 	 */
 	public void getTileImage() {
 		try {
-			m_tile[0] = new Tile();
-			m_tile[0].m_image = ImageIO.read(getClass().getResource("/tiles/GRASS.png"));
+			m_tile[0] = new Tile(m_gp, -1, -1);
+			m_tile[0].setSprite(ImageIO.read(getClass().getResource("/tiles/FLOOR.png")));
 			
-			m_tile[1] = new Tile();
-			m_tile[1].m_image = ImageIO.read(getClass().getResource("/tiles/BRICK2.png"));
+			m_tile[1] = new Tile(m_gp, -1, -1);
+			m_tile[1].setSprite(ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")));
 			
-			m_tile[2] = new Tile();
-			m_tile[2].m_image = ImageIO.read(getClass().getResource("/tiles/WATER.png"));
+			m_tile[2] = new Tile(m_gp, -1, -1);
+			m_tile[2].setSprite(ImageIO.read(getClass().getResource("/tiles/SHELF.png")));
 			
-			m_tile[3] = new Tile();
-			m_tile[3].m_image = ImageIO.read(getClass().getResource("/tiles/LAVA.png"));
+			m_tile[3] = new Tile(m_gp, -1, -1);
+			m_tile[3].setSprite(ImageIO.read(getClass().getResource("/tiles/LAVA.png")));
 			
-			m_tile[4] = new Tile();
-			m_tile[4].m_image = ImageIO.read(getClass().getResource("/tiles/SAND.png"));
+			m_tile[4] = new Tile(m_gp, -1, -1);
+			m_tile[4].setSprite(ImageIO.read(getClass().getResource("/tiles/SAND.png")));
 			
-			m_tile[5] = new Tile();
-			m_tile[5].m_image = ImageIO.read(getClass().getResource("/tiles/SNOW.png"));
+			m_tile[5] = new Tile(m_gp, -1, -1);
+			m_tile[5].setSprite(ImageIO.read(getClass().getResource("/tiles/SNOW.png")));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class TileManager {
 			int row = 0;
 			
 			// Parcourir le fichier txt pour r�cup�rer les valeurs
-			while (col < m_gp.MAX_SCREEN_COL && row < m_gp.MAX_SCREE_ROW) {
+			while (col < m_gp.MAX_SCREEN_COL && row < m_gp.MAX_SCREEN_ROW) {
 				String line = br.readLine();
 				while (col < m_gp.MAX_SCREEN_COL) {
 					String numbers[] = line.split(" ");
@@ -105,10 +105,10 @@ public class TileManager {
 		int x = 0;
 		int y = 0;
 		
-		while (col < m_gp.MAX_SCREEN_COL && row < m_gp.MAX_SCREE_ROW) {
+		while (col < m_gp.MAX_SCREEN_COL && row < m_gp.MAX_SCREEN_ROW) {
 			int tileNum = m_mapTileNum[col][row];
 			
-			g2.drawImage(m_tile[tileNum].m_image, x, y, m_gp.TILE_SIZE, m_gp.TILE_SIZE, null);
+			g2.drawImage(m_tile[tileNum].getSprite(), x, y, m_gp.TILE_SIZE, m_gp.TILE_SIZE, null);
 			col ++;
 			x += m_gp.TILE_SIZE;
 			if (col == m_gp.MAX_SCREEN_COL) {
@@ -118,6 +118,5 @@ public class TileManager {
 				y += m_gp.TILE_SIZE;
 			}
 		}
-		
 	}
 }

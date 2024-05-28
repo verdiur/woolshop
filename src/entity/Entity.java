@@ -1,13 +1,53 @@
 package entity;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 /**
- * Entité de base du jeu
- *
+ * EntitÃ© de base du jeu
  */
-public abstract class Entity {
-	public int m_x, m_y;				//position sur la map
-	public int m_speed;					//Déplacement de l'entité
-	public BufferedImage m_idleImage;	//Une image de l'entité
+public abstract class Entity
+{
+	protected int m_x;
+	protected int m_y;
+	protected boolean m_isPhysical = false;
+
+	/**
+	 * Constructeur de classe.
+	 * @param x position x en tiles
+	 * @param y position y en tiles
+	 */
+	public Entity(int x, int y) {
+		m_x = x;
+		m_y = y;
+	}
+
+	public Entity(int x, int y, boolean isP) {
+		m_x = x;
+		m_y = y;
+		m_isPhysical = isP;
+	}
+
+	public float getX() {
+		return m_x;
+	}
+
+	public float getY() {
+		return m_y;
+	}
+
+	public boolean isPhysical() {
+		return m_isPhysical;
+	}
+
+	/**
+	 * MÃ©thode abstraite de dessin.
+	 * @param g2 contexte graphique
+	 */
+	public abstract void draw(Graphics2D g2);
+
+	/**
+	 * MÃ©thode abstraite d'update.
+	 */
+	public abstract void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr);
 }
