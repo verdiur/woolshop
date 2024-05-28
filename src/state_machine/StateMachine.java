@@ -1,3 +1,5 @@
+package state_machine;
+
 import java.util.Map;
 
 public class StateMachine {

@@ -1,3 +1,5 @@
+package state_machine;
+
 public abstract class State {
     /*
 

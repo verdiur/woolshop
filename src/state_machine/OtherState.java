@@ -1,3 +1,5 @@
+package state_machine;
+
 public class OtherState extends State {
     public OtherState() {
         super.m_name = "other";
