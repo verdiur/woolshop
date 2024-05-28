@@ -89,5 +89,5 @@ classDiagram
     - `main/` contient le programme principal.
     - `entity/` contient la classe `Entity` et ses classes filles directes (`Tile` et `Actor`).
     - `tile/` contient les classes filles de `Tile` et classes associées.
-    - `actor/` contient les classes filles de `Actor` et classes associées.
+    - `actor/` cont*ient les classes filles de `Actor` et classes associées.
     - `collision/` contient `Collision`.

@@ -11,7 +11,6 @@ import actor.Player;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 /**
  * Panel principal du jeu contenant la map principale
