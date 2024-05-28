@@ -11,12 +11,16 @@ import entity.Entity;
 import entity.Actor;
 import entity.Tile;
 import actor.Player;
+import actor.Client;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Date;
 
 
 /**
@@ -44,6 +48,9 @@ public class GamePanel extends JPanel implements Runnable{
 	MapManager m_map_manager;
 	KeyListener m_keyH;
 
+	Client m_client;
+	Timer m_timer;
+
 	/** Conteneur pour toutes les entités */
 	ArrayList<Entity> m_entity_arr;
 	/** Conteneur pour les Actors (bougent) */
@@ -57,7 +64,16 @@ public class GamePanel extends JPanel implements Runnable{
 	 * Constructeur
 	 */
 	public GamePanel() {
-		m_FPS = 60;				
+		m_FPS = 60;
+		m_timer = new Timer();
+		TimerTask t_update = new TimerTask() {
+			public void run(){
+				update_time();
+			}
+		};
+
+		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
+
 		m_keyH = new KeyHandler();
 
 		/** Player */
@@ -75,6 +91,20 @@ public class GamePanel extends JPanel implements Runnable{
 			player_sprite
 		);
 
+		BufferedImage client_sprite = null;
+		try {
+			client_sprite =
+			ImageIO.read(getClass().getResource("/player/testclient.png"));
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		m_client = new Client(
+			this, 
+			3, 
+			4,
+			client_sprite
+		);
+
 		/** Conteneurs d'entités */
 		m_entity_arr = new ArrayList<Entity>();
 		m_actor_arr = new ArrayList<Actor>();
@@ -85,10 +115,16 @@ public class GamePanel extends JPanel implements Runnable{
 		m_actor_arr.add(m_player);
 		m_collision_arr.add(m_player);
 
-		/** TileManager */
-		// m_tileM = new TileManager(this);
+		// m_entity_arr.add(m_client);
+		// m_actor_arr.add(m_client);
+		// m_collision_arr.add(m_client);
+
+		System.out.println(m_entity_arr);
+
+		/** MapManager */
 		m_map_manager = new MapManager(this);
 		m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
@@ -136,7 +172,8 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 	}
-	
+
+  	/********* ?????????? */
 
 	/**
 	 * Mise à jour des données des entités
@@ -145,7 +182,15 @@ public class GamePanel extends JPanel implements Runnable{
 		for (Entity e: m_entity_arr) {
 			e.update(m_actor_arr, m_tile_arr, m_collision_arr);
 		}
+  	}
+
+	public void update_time() {
+		if (m_client != null) {
+			m_client.update(m_actor_arr, m_tile_arr, m_collision_arr);
+		}
 	}
+  
+   	/********* ?????????? */
 	
 	/**
 	 * Affichage des éléments
@@ -153,11 +198,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		for (Entity e: m_entity_arr) {
+		// affichage tiles
+		for (Entity e: m_tile_arr) {
 			e.draw(g2);
 		}
-		m_player.draw(g2);
+		// affichage actors par dessus les tiles
+		for (Entity e: m_actor_arr) {
+			e.draw(g2);
+		}
+		m_client.draw(g2);
 		g2.dispose();
 	}
-	
 }
