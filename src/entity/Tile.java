@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import main.GamePanel;
 
@@ -54,10 +55,13 @@ public class Tile extends Entity
         g2.drawImage(
             m_sprite, 
             m_x * m_gp.TILE_SIZE, 
-            m_y * m_gp.TILE_SIZE, 
+            m_y * m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
             null
         );
     }
     
-    public void update() {};
+    @Override
+    public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr) {};
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import collision.Collision;
 import main.GamePanel;
-import tile.GameObject;
 import util.DirEnum;
 
 /**
@@ -60,13 +59,18 @@ public abstract class Actor extends Entity implements Collision
         m_sprite_map = sprite_map;
     }
 
-    public boolean  canMove(Entity ent, DirEnum dir) {
-        return (
-            (dir == DirEnum.up && isAt(ent, DirEnum.down)) ||
-            (dir == DirEnum.down && isAt(ent, DirEnum.up)) ||
-            (dir == DirEnum.left && isAt(ent, DirEnum.right)) ||
-            (dir == DirEnum.right && isAt(ent, DirEnum.left))
-        );
+    public boolean canMove(ArrayList<Entity> collision_arr, DirEnum dir) {
+        // return (
+        //     (dir == DirEnum.up && isAt(go, DirEnum.down)) ||
+        //     (dir == DirEnum.down && isAt(go, DirEnum.up)) ||
+        //     (dir == DirEnum.left && isAt(go, DirEnum.right)) ||
+        //     (dir == DirEnum.right && isAt(go, DirEnum.left))
+        // );
+        for (Entity e: collision_arr) {
+            if (isAt(e, dir)) { return false; }
+        }
+        return true;
+
     }
     
     @Override
@@ -88,15 +92,15 @@ public abstract class Actor extends Entity implements Collision
     public boolean isAt(Entity entity, DirEnum dir) {
         switch (dir) {
             case up:
-                return entity.getY() == m_y - 1;
+                return entity.getY() == m_y - 1 && entity.getX() == m_x;
             case down:
-                return entity.getY() == m_y + 1;
+                return entity.getY() == m_y + 1 && entity.getX() == m_x;
             case left:
-                return entity.getX() == m_x - 1;
+                return entity.getX() == m_x - 1 && entity.getY() == m_y;
             case right:
-                return entity.getX() == m_x + 1;
+                return (entity.getX() == m_x + 1) && entity.getY() == m_y;
             default:
-                return false;
+                return true;
         }
     }
 
@@ -107,7 +111,6 @@ public abstract class Actor extends Entity implements Collision
     /**
      * Se déplacer dans une direction. Pour l'instant move() fait se téléporter
      * d'une case.
-     * TODO voir plus tard pour un mouvement plus fluide avec interpolation.
      * @param dir
      */
     public void move(DirEnum dir) {
@@ -139,4 +142,10 @@ public abstract class Actor extends Entity implements Collision
             case no:
         }
     }
+
+    /**
+     * Méthode d'update
+     */
+    @Override
+    public abstract void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr);
 }

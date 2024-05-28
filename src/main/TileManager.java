@@ -118,6 +118,5 @@ public class TileManager {
 				y += m_gp.TILE_SIZE;
 			}
 		}
-		
 	}
 }

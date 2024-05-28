@@ -41,6 +41,8 @@ public class PlayerKeyAdapter implements KeyListener {
         switch (code) {
             case 0x25:   {}   // left
                 m_dir = DirEnum.left;
+                System.out.print(m_player.getX());
+                System.out.println(m_player.getY());
                 break;
             case 0x27:      // right
                 m_dir = DirEnum.right;

@@ -1,10 +1,15 @@
 package main;
 
+import java.util.ArrayList;
+
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
+import entity.Entity;
+import entity.Actor;
+import entity.Tile;
 import actor.Player;
 import actor.Client;
 
@@ -17,9 +22,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
 
+
 /**
  * Panel principal du jeu contenant la map principale
- *
  */
 public class GamePanel extends JPanel implements Runnable{
 	
@@ -35,15 +40,25 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS : taux de rafraichissement
 	int m_FPS;
 	
-	// Cr�ation des diff�rentes instances (Player, KeyHandler, TileManager, GameThread ...)
+	// Création des différentes instances (Player, KeyHandler, TileManager, GameThread ...)
 	// KeyHandler m_keyH;
 	Thread m_gameThread;
 	Player m_player;
-	TileManager m_tileM;
+	// TileManager m_tileM;
+	MapManager m_map_manager;
 	KeyListener m_keyH;
+
 	Client m_client;
 	Timer m_timer;
 
+	/** Conteneur pour toutes les entités */
+	ArrayList<Entity> m_entity_arr;
+	/** Conteneur pour les Actors (bougent) */
+	ArrayList<Actor> m_actor_arr;
+	/** Conteneur pour les Tiles (bougent pas) */
+	ArrayList<Tile> m_tile_arr;
+	/** Conteneur d'entités ayant collision */
+	ArrayList<Entity> m_collision_arr;
 		
 	/**
 	 * Constructeur
@@ -59,9 +74,9 @@ public class GamePanel extends JPanel implements Runnable{
 
 		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
 
-
 		m_keyH = new KeyHandler();
 
+		/** Player */
 		BufferedImage player_sprite = null;
 		try {
 			player_sprite =
@@ -90,10 +105,23 @@ public class GamePanel extends JPanel implements Runnable{
 			client_sprite
 		);
 
-
-
-
 		m_tileM = new TileManager(this);
+
+		/** Conteneurs d'entités */
+		m_entity_arr = new ArrayList<Entity>();
+		m_actor_arr = new ArrayList<Actor>();
+		m_tile_arr = new ArrayList<Tile>();
+		m_collision_arr = new ArrayList<Entity>();
+		
+		m_entity_arr.add(m_player);
+		m_actor_arr.add(m_player);
+		m_collision_arr.add(m_player);
+
+		/** TileManager */
+		// m_tileM = new TileManager(this);
+		m_map_manager = new MapManager(this);
+		m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
@@ -118,13 +146,13 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		while(m_gameThread != null) { //Tant que le thread du jeu est actif
 			
-			//Permet de mettre � jour les diff�rentes variables du jeu
+			// Permet de mettre à jour les différentes variables du jeu
 			this.update();
 			
-			//Dessine sur l'�cran le personnage et la map avec les nouvelles informations. la m�thode "paintComponent" doit obligatoirement �tre appel�e avec "repaint()"
+			// Dessine sur l'écran le personnage et la map avec les nouvelles informations. la méthode "paintComponent" doit obligatoirement être appelée avec "repaint()"
 			this.repaint();
 			
-			//Calcule le temps de pause du thread
+			// Calcule le temps de pause du thread
 			try {
 				double remainingTime = nextDrawTime - System.nanoTime();
 				remainingTime = remainingTime/1000000;
@@ -137,36 +165,40 @@ public class GamePanel extends JPanel implements Runnable{
 				nextDrawTime += drawInterval;
 				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
+  /********* ?????????? */
 
 	/**
 	 * Mise à jour des données des entités
 	 */
 	public void update() {
 		m_player.update();
-			
-
-	}
+    for (Entity e: m_entity_arr) {
+			e.update(m_actor_arr, m_tile_arr, m_collision_arr);
+    }
+  }
 
 	public void update_time(){
 		if (m_client != null){
 			m_client.update();
 		}
-		
 	}
+  
+   /********* ?????????? */
 	
 	/**
-	 * Affichage des �l�ments
+	 * Affichage des éléments
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		m_tileM.draw(g2);
+		for (Entity e: m_entity_arr) {
+			e.draw(g2);
+		}
 		m_player.draw(g2);
 		m_client.draw(g2);
 		g2.dispose();
