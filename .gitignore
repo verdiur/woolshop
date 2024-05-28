@@ -25,3 +25,9 @@ replay_pid*
 
 # fichiers temporaires...
 .temp
+
+# binaries
+bin/
+
+# intelliJ junk
+.idea/
