@@ -38,24 +38,34 @@ public class TileManager {
 	 */
 	public void getTileImage() {
 		try {
-			m_tile[0] = new Tile(m_gp, -1, -1);
-			m_tile[0].setSprite(ImageIO.read(getClass().getResource("/tiles/FLOOR.png")));
-			
-			m_tile[1] = new Tile(m_gp, -1, -1);
-			m_tile[1].setSprite(ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")));
-			
-			m_tile[2] = new Tile(m_gp, -1, -1);
-			m_tile[2].setSprite(ImageIO.read(getClass().getResource("/tiles/SHELF.png")));
-			
-			m_tile[3] = new Tile(m_gp, -1, -1);
-			m_tile[3].setSprite(ImageIO.read(getClass().getResource("/tiles/LAVA.png")));
-			
-			m_tile[4] = new Tile(m_gp, -1, -1);
-			m_tile[4].setSprite(ImageIO.read(getClass().getResource("/tiles/SAND.png")));
-			
-			m_tile[5] = new Tile(m_gp, -1, -1);
-			m_tile[5].setSprite(ImageIO.read(getClass().getResource("/tiles/SNOW.png")));
-			
+            m_tile[0] = new Tile(m_gp, -1, -1);
+            m_tile[0].setSprite(ImageIO.read(getClass().getResource("/tiles/FLOOR.png")));
+            
+            m_tile[1] = new Tile(m_gp, -1, -1);
+            m_tile[1].setSprite(ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")));
+            
+            m_tile[2] = new Tile(m_gp, -1, -1);
+            m_tile[2].setSprite(ImageIO.read(getClass().getResource("/tiles/SHELF.png")));
+            
+            m_tile[3] = new Tile(m_gp, -1, -1);
+            m_tile[3].setSprite(ImageIO.read(getClass().getResource("/tiles/COUNTER.png")));
+            
+            m_tile[4] = new Tile(m_gp, -1, -1);
+            m_tile[4].setSprite(ImageIO.read(getClass().getResource("/tiles/TAPIS.png")));
+            
+            m_tile[5] = new Tile(m_gp, -1, -1);
+            m_tile[5].setSprite(ImageIO.read(getClass().getResource("/tiles/TOPWALL.png")));
+
+            m_tile[6] = new Tile(m_gp, -1, -1);
+            m_tile[6].setSprite(ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")));
+
+            m_tile[7] = new Tile(m_gp, -1, -1);
+            m_tile[7].setSprite(ImageIO.read(getClass().getResource("/tiles/BOTTOMWALL.png")));
+
+            m_tile[8] = new Tile(m_gp, -1, -1);
+            m_tile[8].setSprite(ImageIO.read(getClass().getResource("/tiles/CORNERWALL.png")));
+
+            
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
