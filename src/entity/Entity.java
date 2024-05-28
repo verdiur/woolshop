@@ -9,6 +9,7 @@ public abstract class Entity
 {
 	protected int m_x;
 	protected int m_y;
+	protected boolean m_isPhysical = false;
 
 	/**
 	 * Constructeur de classe.
@@ -20,12 +21,22 @@ public abstract class Entity
 		m_y = y;
 	}
 
+	public Entity(int x, int y, boolean isP) {
+		m_x = x;
+		m_y = y;
+		m_isPhysical = isP;
+	}
+
 	public float getX() {
 		return m_x;
 	}
 
 	public float getY() {
 		return m_y;
+	}
+
+	public boolean isPhysical() {
+		return m_isPhysical;
 	}
 
 	/**

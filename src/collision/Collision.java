@@ -11,7 +11,7 @@ public interface Collision{
      * @param dir direction
      * @return oui ou non
      */
-    public boolean isColliding(Entity entity, DirEnum dir);
+    public boolean isColliding(Entity entity);
 
     /**
      * Détermine si this est à côté d'un Entity donné en paramètre.
