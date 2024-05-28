@@ -62,31 +62,41 @@ public class MapManager {
                             m_gp.getEntities().add(e);
                             break;
                         }
+
                         case 2: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/SHELF.png")); }
+                            // floor
+                            try { s = ImageIO.read(getClass().getResource("/tiles/FLOORSHADOW.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
+
                             e = new Wall(m_gp, row, col, s);
                             m_gp.getEntities().add(e);
                             m_gp.getTiles().add(e);
                             m_gp.getCollisions().add(e);
+
                             break;
                         }
+
+
                         case 3: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/COUNTER.png")); }
-                            catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Wall(m_gp, row, col, s);
-                            m_gp.getEntities().add(e);
-                            m_gp.getTiles().add(e);
-                            m_gp.getCollisions().add(e);
-                            break;
-                        }
-                        case 4: {
                             try { s = ImageIO.read(getClass().getResource("/tiles/TAPIS.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
                             e = new Wall(m_gp, row, col, s);
                             m_gp.getEntities().add(e);
                             m_gp.getTiles().add(e);
                             m_gp.getCollisions().add(e);
+                            break;
+                        }
+
+                        case 4: {
+                            // floor
+                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERBOTTOMLEFT.png")); }
+                            catch (IOException ioe1) { System.out.println(ioe1); }
+
+                            e = new Wall(m_gp, row, col, s);
+                            m_gp.getEntities().add(e);
+                            m_gp.getTiles().add(e);
+                            m_gp.getCollisions().add(e);
+
                             break;
                         }
 
@@ -118,16 +128,7 @@ public class MapManager {
                             m_gp.getTiles().add(e);
                             m_gp.getCollisions().add(e);
                             break;
-                        }
-
-                        case 8: {
-                            try { s = ImageIO.read(getClass().getResource("/tiles/CORNERWALL.png")); }
-                            catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Wall(m_gp, row, col, s);
-                            m_gp.getEntities().add(e);
-                            m_gp.getTiles().add(e);
-                            m_gp.getCollisions().add(e);
-                            break;
+                       
                         }
                     }
                 }
