@@ -40,6 +40,7 @@ public abstract class Actor extends Entity implements Collision
      */
     public Actor(GamePanel a_gp, int x, int y, BufferedImage sprite) {
         super(x, y);
+        m_gp = a_gp;
         m_sprite_map = new HashMap<String, ArrayList<BufferedImage>>();
         m_sprite_map.put("idle", new ArrayList<BufferedImage>());
         m_sprite_map.get("idle").add(sprite);
@@ -54,6 +55,7 @@ public abstract class Actor extends Entity implements Collision
      */
     public Actor(GamePanel a_gp, int x, int y, HashMap<String, ArrayList<BufferedImage>> sprite_map) {
         super(x, y);
+        m_gp = a_gp;
         m_sprite_map = sprite_map;
     }
 

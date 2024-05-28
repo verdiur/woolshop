@@ -11,6 +11,7 @@ import actor.Player;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Panel principal du jeu contenant la map principale
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// KeyHandler m_keyH;
 	Thread m_gameThread;
 	Player m_player;
-	// TileManager m_tileM;
+	TileManager m_tileM;
 		
 	/**
 	 * Constructeur
@@ -42,16 +43,21 @@ public class GamePanel extends JPanel implements Runnable{
 	public GamePanel() {
 		m_FPS = 60;				
 		// m_keyH = new KeyHandler();
-		
-		BufferedImage player_sprite = 
-			ImageIO.read(getClass().getResource("/superhero.png"));
+
+		BufferedImage player_sprite = null;
+		try {
+			player_sprite =
+			ImageIO.read(getClass().getResource("/player/superhero.png"));
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 		m_player = new Player(
 			this, 
 			2, 
 			2,
 			player_sprite
 		);
-		// m_tileM = new TileManager(this);
+		m_tileM = new TileManager(this);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
@@ -114,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		// m_tileM.draw(g2);
+		m_tileM.draw(g2);
 		m_player.draw(g2);
 		g2.dispose();
 	}

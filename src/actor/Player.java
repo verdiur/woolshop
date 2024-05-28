@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import entity.Actor;
+import entity.Entity;
 import main.GamePanel;
 import util.DirEnum;
 
@@ -47,7 +48,9 @@ extends Actor
         g2.drawImage(
             m_sprite_map.get("idle").get(0), 
             m_x * m_gp.TILE_SIZE, 
-            m_y * m_gp.TILE_SIZE, 
+            m_y * m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
             null
         );
     }
@@ -56,5 +59,11 @@ extends Actor
     public void update() {
         DirEnum dir = m_ka.getDir();
         move(dir);
+    }
+
+    @Override
+    public boolean isColliding(Entity entity) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
