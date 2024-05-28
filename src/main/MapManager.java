@@ -54,13 +54,12 @@ public class MapManager {
                             break;
                         }
                         case 1: {
-                            // wall
+
                             try { s = ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")); }
+
                             catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Wall(m_gp, row, col, s);
+                            e = new Tile(m_gp, row, col, s);
                             m_gp.m_entity_arr.add(e);
-                            m_gp.m_tile_arr.add(e);
-                            m_gp.m_collision_arr.add(e);
                             break;
                         }
                         case 2: {
