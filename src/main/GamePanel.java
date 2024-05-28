@@ -105,8 +105,6 @@ public class GamePanel extends JPanel implements Runnable{
 			client_sprite
 		);
 
-		m_tileM = new TileManager(this);
-
 		/** Conteneurs d'entités */
 		m_entity_arr = new ArrayList<Entity>();
 		m_actor_arr = new ArrayList<Actor>();
@@ -117,8 +115,13 @@ public class GamePanel extends JPanel implements Runnable{
 		m_actor_arr.add(m_player);
 		m_collision_arr.add(m_player);
 
-		/** TileManager */
-		// m_tileM = new TileManager(this);
+		// m_entity_arr.add(m_client);
+		// m_actor_arr.add(m_client);
+		// m_collision_arr.add(m_client);
+
+		System.out.println(m_entity_arr);
+
+		/** MapManager */
 		m_map_manager = new MapManager(this);
 		m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 
@@ -170,25 +173,24 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 	}
 
-  /********* ?????????? */
+  	/********* ?????????? */
 
 	/**
 	 * Mise à jour des données des entités
 	 */
 	public void update() {
-		m_player.update();
-    for (Entity e: m_entity_arr) {
+		for (Entity e: m_entity_arr) {
 			e.update(m_actor_arr, m_tile_arr, m_collision_arr);
-    }
-  }
+		}
+  	}
 
-	public void update_time(){
-		if (m_client != null){
-			m_client.update();
+	public void update_time() {
+		if (m_client != null) {
+			m_client.update(m_actor_arr, m_tile_arr, m_collision_arr);
 		}
 	}
   
-   /********* ?????????? */
+   	/********* ?????????? */
 	
 	/**
 	 * Affichage des éléments
@@ -196,12 +198,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		for (Entity e: m_entity_arr) {
+		// affichage tiles
+		for (Entity e: m_tile_arr) {
 			e.draw(g2);
 		}
-		m_player.draw(g2);
+		// affichage actors par dessus les tiles
+		for (Entity e: m_actor_arr) {
+			e.draw(g2);
+		}
 		m_client.draw(g2);
 		g2.dispose();
 	}
-	
 }

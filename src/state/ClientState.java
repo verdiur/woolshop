@@ -1,9 +1,9 @@
-package actor.state;
+package state;
 
 import state_machine.State;
 import util.DirEnum;
 
-public abstract class ClientState extends State{
+public abstract class ClientState extends State {
 
     private DirEnum m_dir;
     

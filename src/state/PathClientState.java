@@ -1,9 +1,8 @@
-package actor.state;
+package state;
 
-import state_machine.State;
 import util.DirEnum;
 
-public class PathClientState extends ClientState{
+public class PathClientState extends ClientState {
 
     private int m_x;
     private int m_y;

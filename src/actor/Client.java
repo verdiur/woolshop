@@ -2,27 +2,25 @@ package actor;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
+import java.awt.Graphics2D;
 import java.util.Map;
 import java.util.Random;
 
 
 import entity.Actor;
+import entity.Entity;
+import entity.Tile;
 import main.GamePanel;
+import state.*;
 // import tile.TileManager;
-import util.DirEnum;
 // import state_machine.StateMachine;
 import state_machine.*;
-import actor.state.*;
-// import state_machine.State;
 
 
 /**
 * NPC1 -> client du magasin 
 */
-
 public class Client extends Actor 
 {
 
@@ -30,7 +28,8 @@ public class Client extends Actor
     private int m_ydest;
 
     private ClientStateMachine m_state;
-     /**
+
+    /**
      * Constructeur de classe avec un seul sprite. Le sprite sera chargé dans un ArrayList
      * avec comme clé "idle".
      * @param a_gp reference GamePanel
@@ -60,15 +59,10 @@ public class Client extends Actor
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.drawImage(
-            m_sprite_map.get("idle").get(0), 
-            m_x * m_gp.TILE_SIZE, 
-            m_y * m_gp.TILE_SIZE, 
-            null
-        );
+        super.draw(g2);
     }
 
-    public void update(){
+    public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr){
         m_state.Update();
         super.m_x = m_state.getState().getX();
         super.m_y = m_state.getState().getY();
@@ -77,13 +71,6 @@ public class Client extends Actor
         System.out.print("; m_y = ");
         System.out.println(m_y);*/
         m_state.getState().setPose(m_x, m_y);
-        
-
-        /*if (m_x == 3){
-            m_x = 4;
-        } else{
-            m_x = 3;
-        }*/
     }
 }
 

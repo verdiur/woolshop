@@ -2,6 +2,7 @@ package entity;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import collision.Collision;
 import main.GamePanel;
@@ -60,12 +61,6 @@ public abstract class Actor extends Entity implements Collision
     }
 
     public boolean canMove(ArrayList<Entity> collision_arr, DirEnum dir) {
-        // return (
-        //     (dir == DirEnum.up && isAt(go, DirEnum.down)) ||
-        //     (dir == DirEnum.down && isAt(go, DirEnum.up)) ||
-        //     (dir == DirEnum.left && isAt(go, DirEnum.right)) ||
-        //     (dir == DirEnum.right && isAt(go, DirEnum.left))
-        // );
         for (Entity e: collision_arr) {
             if (isAt(e, dir)) { return false; }
         }
@@ -141,6 +136,17 @@ public abstract class Actor extends Entity implements Collision
                 }
             case no:
         }
+    }
+
+    public void draw(Graphics2D g2) {
+        g2.drawImage(
+            m_sprite_map.get("idle").get(0), 
+            m_x * m_gp.TILE_SIZE, 
+            m_y * m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
+            null
+        );
     }
 
     /**

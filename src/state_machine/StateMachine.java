@@ -83,16 +83,15 @@ public class StateMachine {
     public void child_transition(String state, String new_state){
 
         // verifie si on transitionne bien de l'etat actuel vers un nouvel etat
-        if (m_current_state != m_states.get(state) || state == new_state ) { // A rajouter verifier que new_state est bien compris dans l'enum
+        if (m_current_state != m_states.get(state) || state == new_state )          // A rajouter verifier que new_state est bien compris dans l'enum
+        { 
             System.out.println("StateMachine error");
             return;
         }
         else
         {
             m_current_state.Exit();
-
             m_current_state = m_states.get(new_state);
-
             m_current_state.Enter();
         }
 

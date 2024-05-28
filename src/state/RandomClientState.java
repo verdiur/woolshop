@@ -1,11 +1,9 @@
-package actor.state;
+package state;
 
-import state_machine.State;
 import java.util.Random;
-import entity.Actor;
 import util.DirEnum;
 
-public class RandomClientState extends ClientState{
+public class RandomClientState extends ClientState {
 
     private int m_x;
     private int m_y;

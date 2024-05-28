@@ -46,23 +46,16 @@ extends Actor
     }
 
     @Override
-    public void draw(Graphics2D g2) {
-        g2.drawImage(
-            m_sprite_map.get("idle").get(0), 
-            m_x * m_gp.TILE_SIZE, 
-            m_y * m_gp.TILE_SIZE,
-            m_gp.TILE_SIZE,
-            m_gp.TILE_SIZE,
-            null
-        );
-    }
-
-    @Override
     public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr) {
         DirEnum dir = m_ka.getDir();
         if (canMove(collision_arr, dir)) {
             move(dir);
         }
+    }
+
+    @Override
+    public void draw(Graphics2D g2) {
+        super.draw(g2);
     }
 
     @Override

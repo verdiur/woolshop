@@ -1,7 +1,8 @@
 package state_machine;
 
 import java.util.Map;
-import actor.state.*;
+
+import state.*;
 
 public class ClientStateMachine{
 
@@ -89,7 +90,6 @@ public class ClientStateMachine{
         }
         else
         {
-            
             m_current_state.Exit();
 
             int x = m_current_state.getX();
@@ -99,7 +99,6 @@ public class ClientStateMachine{
 
             m_current_state.setPose(x, y); 
             m_current_state.Enter();
-            
         }
 
 
