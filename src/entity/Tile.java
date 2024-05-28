@@ -55,7 +55,9 @@ public class Tile extends Entity
         g2.drawImage(
             m_sprite, 
             m_x * m_gp.TILE_SIZE, 
-            m_y * m_gp.TILE_SIZE, 
+            m_y * m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
+            m_gp.TILE_SIZE,
             null
         );
     }

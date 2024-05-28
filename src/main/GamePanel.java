@@ -40,7 +40,8 @@ public class GamePanel extends JPanel implements Runnable{
 	// KeyHandler m_keyH;
 	Thread m_gameThread;
 	Player m_player;
-	TileManager m_tileM;
+	// TileManager m_tileM;
+	MapManager m_map_manager;
 	KeyListener m_keyH;
 
 	/** Conteneur pour toutes les entités */
@@ -85,7 +86,9 @@ public class GamePanel extends JPanel implements Runnable{
 		m_collision_arr.add(m_player);
 
 		/** TileManager */
-		m_tileM = new TileManager(this);
+		// m_tileM = new TileManager(this);
+		m_map_manager = new MapManager(this);
+		m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 		
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
@@ -150,7 +153,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		m_tileM.draw(g2);
+		for (Entity e: m_entity_arr) {
+			e.draw(g2);
+		}
 		m_player.draw(g2);
 		g2.dispose();
 	}
