@@ -11,7 +11,7 @@ import java.util.Random;
 
 import entity.Actor;
 import main.GamePanel;
-import tile.TileManager;
+// import tile.TileManager;
 import util.DirEnum;
 // import state_machine.StateMachine;
 import state_machine.*;
@@ -73,30 +73,5 @@ public class Client extends Actor
         move(m_state.getState().getDir());
         m_state.getState().setPose(m_x, m_y);
     }
-
-    // public static int[][] FindNeighbors(){
-    //     Client client = new Client();
-    //     if (canMove(client, DirEnum.up)){ neighbors[0][0] = m_x; neighbors[0][1] = m_y + 1; }
-    // }
-
-
-
-    // public static List<Point> FindNeighbors(int[][] map, Point point) {
-    //     List<Point> neighbors = new ArrayList<>();
-    //     Point up = point.offset(0,  1);
-    //     Point down = point.offset(0,  -1);
-    //     Point left = point.offset(-1, 0);
-    //     Point right = point.offset(1, 0);
-    //     if (IsWalkable(map, up)) neighbors.add(up);
-    //     if (IsWalkable(map, down)) neighbors.add(down);
-    //     if (IsWalkable(map, left)) neighbors.add(left);
-    //     if (IsWalkable(map, right)) neighbors.add(right);
-    //     return neighbors;
-    // }
-
-
-
-    /**fonction search avec type generique  */
-
 }
 

@@ -55,9 +55,9 @@ public class PathClientState extends ClientState{
         }
     }
 
-    public DirEnum getDir(){
-        return m_dir;
-    }
+    // public DirEnum getDir(){
+    //     return m_dir;
+    // }
 
     public void setPose(int x, int y){
         m_x = x;

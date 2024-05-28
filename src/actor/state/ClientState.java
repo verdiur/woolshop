@@ -8,7 +8,7 @@ public abstract class ClientState extends State{
     private DirEnum m_dir;
     
     public DirEnum getDir(){
-        return 0;
+        return m_dir;
     }
 
     public void setPose(int x, int y){
