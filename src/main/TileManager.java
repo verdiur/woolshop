@@ -39,13 +39,13 @@ public class TileManager {
 	public void getTileImage() {
 		try {
 			m_tile[0] = new Tile(m_gp, -1, -1);
-			m_tile[0].setSprite(ImageIO.read(getClass().getResource("/tiles/GRASS.png")));
+			m_tile[0].setSprite(ImageIO.read(getClass().getResource("/tiles/FLOOR.png")));
 			
 			m_tile[1] = new Tile(m_gp, -1, -1);
-			m_tile[1].setSprite(ImageIO.read(getClass().getResource("/tiles/BRICK2.png")));
+			m_tile[1].setSprite(ImageIO.read(getClass().getResource("/tiles/SIDEWALL.png")));
 			
 			m_tile[2] = new Tile(m_gp, -1, -1);
-			m_tile[2].setSprite(ImageIO.read(getClass().getResource("/tiles/WATER.png")));
+			m_tile[2].setSprite(ImageIO.read(getClass().getResource("/tiles/SHELF.png")));
 			
 			m_tile[3] = new Tile(m_gp, -1, -1);
 			m_tile[3].setSprite(ImageIO.read(getClass().getResource("/tiles/LAVA.png")));

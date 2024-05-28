@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
 // import actor.TileManager;
 import actor.Player;
-import tile.TileManager;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -49,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
 		BufferedImage player_sprite = null;
 		try {
 			player_sprite =
-			ImageIO.read(getClass().getResource("/player/superhero.png"));
+			ImageIO.read(getClass().getResource("/player/bebert.png"));
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -124,7 +123,7 @@ public class GamePanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		m_tileM.draw(g2);
-		// m_player.draw(g2);
+		m_player.draw(g2);
 		g2.dispose();
 	}
 	
