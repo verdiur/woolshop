@@ -59,6 +59,9 @@ public class GamePanel extends JPanel implements Runnable{
 	ArrayList<Tile> m_tile_arr;
 	/** Conteneur d'entités ayant collision */
 	ArrayList<Entity> m_collision_arr;
+
+	// Money counter
+    int moneyCounter;
 		
 	/**
 	 * Constructeur
@@ -73,6 +76,8 @@ public class GamePanel extends JPanel implements Runnable{
 		};
 
 		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
+
+		moneyCounter = 0;
 
 		m_keyH = new KeyHandler();
 
@@ -198,6 +203,11 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+
+		// Affichage compteur argent
+		g2.setColor(Color.WHITE);
+		g2.drawString("Money: " + moneyCounter + "$", 60, 60);
+		
 		// affichage tiles
 		for (Entity e: m_tile_arr) {
 			e.draw(g2);
