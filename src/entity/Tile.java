@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import main.GamePanel;
 
@@ -59,5 +60,6 @@ public class Tile extends Entity
         );
     }
     
-    public void update() {};
+    @Override
+    public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr) {};
 }

@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 /**
  * Entité de base du jeu
@@ -44,4 +45,9 @@ public abstract class Entity
 	 * @param g2 contexte graphique
 	 */
 	public abstract void draw(Graphics2D g2);
+
+	/**
+	 * Méthode abstraite d'update.
+	 */
+	public abstract void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr);
 }
