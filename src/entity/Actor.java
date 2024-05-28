@@ -80,6 +80,11 @@ public abstract class Actor extends Entity implements Collision
     }
 
     @Override
+    public boolean isColliding(Entity entity) {
+        return (m_x == entity.getX() && m_y == entity.getY());
+    }
+
+    @Override
     public boolean isAt(Entity entity, DirEnum dir) {
         switch (dir) {
             case up:
