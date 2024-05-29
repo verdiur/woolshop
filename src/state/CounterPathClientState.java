@@ -25,7 +25,7 @@ public class CounterPathClientState extends ClientState {
         super.m_name = "counter";
         super.m_transition = false;   
         m_client = client; 
-        System.out.println(m_xdest);
+        //System.out.println(m_xdest);
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat
@@ -52,7 +52,7 @@ public class CounterPathClientState extends ClientState {
         // System.out.println("a");
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
-            super.m_transition_name = "exit";
+            super.m_transition_name = "waiting";
             m_dir = DirEnum.no;
         } else {
             if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.down)){

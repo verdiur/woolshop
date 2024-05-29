@@ -34,6 +34,7 @@ public class RandomClientState extends ClientState {
     public void Enter(){
         Random rdm = new Random();
         m_time = rdm.nextInt(MAX_TEMP);
+        m_client.setMoney(100);
     }
     // Definie l'ensemble des executions à la sortie de l'état
     // A définir dans la classe fille
@@ -53,26 +54,30 @@ public class RandomClientState extends ClientState {
         if (m_time != 0){
 
             ArrayList<Integer[]> neighb = neighbors(collision_arr);
-            int k = rdm.nextInt(0,neighb.size());
-            // System.out.println(k);
-            switch(k){
-                case 0:
-                    m_x = neighb.get(0)[0];
-                    m_y = neighb.get(0)[1];
-                    break;
-                case 1:
-                    m_x = neighb.get(1)[0];
-                    m_y = neighb.get(1)[1];
-                    break;
-                case 2:
-                    m_x = neighb.get(2)[0];
-                    m_y = neighb.get(2)[1];
-                    break;
-                case 3:
-                    m_x = neighb.get(0)[0];
-                    m_y = neighb.get(0)[1];
-                    break;
+            if (neighb.size() != 0){
+                int k = rdm.nextInt(0,neighb.size());
+                // System.out.println(k);
+                switch(k){
+                    case 0:
+                        m_x = neighb.get(0)[0];
+                        m_y = neighb.get(0)[1];
+                        break;
+                    case 1:
+                        m_x = neighb.get(1)[0];
+                        m_y = neighb.get(1)[1];
+                        break;
+                    case 2:
+                        m_x = neighb.get(2)[0];
+                        m_y = neighb.get(2)[1];
+                        break;
+                    case 3:
+                        m_x = neighb.get(0)[0];
+                        m_y = neighb.get(0)[1];
+                        break;
+                }
+
             }
+            
             // System.out.print("m_x = ");
             // System.out.print(m_x);
             // System.out.print("; m_y = ");

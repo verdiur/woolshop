@@ -23,6 +23,7 @@ public class PlayerKeyAdapter implements KeyListener {
     private UseEnum m_use;
     private final Set<Integer> pressedKeys = new HashSet<Integer>();
 
+
     PlayerKeyAdapter(Player player) {
         m_player = player;
         m_dir = DirEnum.no;
@@ -97,6 +98,7 @@ public class PlayerKeyAdapter implements KeyListener {
                         break;
                 }
             }
+
         }
         
         System.out.println(pressedKeys);
@@ -106,4 +108,5 @@ public class PlayerKeyAdapter implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {}
+
 }
