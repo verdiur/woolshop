@@ -1,5 +1,9 @@
 package state_machine;
 
+import java.util.ArrayList;
+
+import entity.Entity;
+
 /**
  * Classe dont le rôle est de gerer le fonctionnement d'un etat à l'aide de
  * 3 méthodes principales.
