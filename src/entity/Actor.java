@@ -122,27 +122,30 @@ public abstract class Actor extends Entity implements Collision
                 if (!has_moved) {
                     m_y -= 1;
                     has_moved = true;
-                    break;
                 }
+                break;
             case down:
                 if (!has_moved) {
                     m_y += 1;
                     has_moved = true;
-                    break;
                 }
+                break;
             case left:
                 if (!has_moved) {
                     m_x -= 1;
                     has_moved = true;
-                    break;
                 }
+                break;
             case right:
                 if (!has_moved) {
                     m_x += 1;
                     has_moved = true;
-                    break;
                 }
+                break;
             case no:
+                break;
+            default:
+                break;
         }
     }
 

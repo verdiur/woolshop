@@ -11,6 +11,7 @@ import entity.Entity;
 import entity.Tile;
 import main.GamePanel;
 import util.DirEnum;
+import util.UseEnum;
 
 /**
  * Joueur.
@@ -43,6 +44,10 @@ extends Actor
     public Player(GamePanel a_gp, int x, int y, HashMap<String, ArrayList<BufferedImage>> sprite_map) {
         super(a_gp, x, y, sprite_map);
         m_ka = new PlayerKeyAdapter(this);
+    }
+
+    public void use(DirEnum dir, UseEnum use) {
+        
     }
 
     @Override

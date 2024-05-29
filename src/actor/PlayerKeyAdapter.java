@@ -1,9 +1,14 @@
 package actor;
 
 import java.awt.event.KeyListener;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import util.DirEnum;
+import util.UseEnum;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 /**
@@ -15,10 +20,13 @@ import java.awt.event.KeyEvent;
 public class PlayerKeyAdapter implements KeyListener {
     private Player m_player;
     private DirEnum m_dir;
+    private UseEnum m_use;
+    private final Set<Integer> pressedKeys = new HashSet<Integer>();
 
     PlayerKeyAdapter(Player player) {
         m_player = player;
         m_dir = DirEnum.no;
+        m_use = UseEnum.no_use;
     }
 
     Player getPlayer() {
@@ -29,29 +37,58 @@ public class PlayerKeyAdapter implements KeyListener {
         return m_dir;
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        m_player.setMoved(false);
-        m_dir = DirEnum.no;
+    UseEnum getUse() {
+        return m_use;
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode();
-        switch (code) {
-            case 0x25:   {}   // left
-                m_dir = DirEnum.left;
-                break;
-            case 0x27:      // right
-                m_dir = DirEnum.right;
-                break;
-            case 0x26:      // up
-                m_dir = DirEnum.up;
-                break;
-            case 0x28:
-                m_dir = DirEnum.down;
-                break;
-            /// TODO ajouter ici des contrôles supplémentaires...
+    public synchronized void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (pressedKeys.remove(keyCode)) {
+            switch(keyCode) {
+                case 0x25:      // left 
+                    m_dir = DirEnum.no;
+                    break;
+                case 0x27:      // right
+                    m_dir = DirEnum.no;
+                    break;
+                case 0x26:      // up
+                    m_dir = DirEnum.no;
+                    break;
+                case 0x28:
+                    m_dir = DirEnum.no;
+                    break;
+                case 32:
+                    m_use = UseEnum.no_use;
+                    break;
+
+            }
+        }
+        m_player.setMoved(false);
+    }
+
+    @Override
+    public synchronized void keyPressed(KeyEvent e) {
+        pressedKeys.add(e.getKeyCode());
+        if (!pressedKeys.isEmpty()) {
+            for (Iterator<Integer> it = pressedKeys.iterator(); it.hasNext();) {
+                switch (it.next()) {
+                    case 32:
+                        m_use = UseEnum.use;
+                    case 0x25:      // left 
+                        m_dir = DirEnum.left;
+                        break;
+                    case 0x27:      // right
+                        m_dir = DirEnum.right;
+                        break;
+                    case 0x26:      // up
+                        m_dir = DirEnum.up;
+                        break;
+                    case 0x28:
+                        m_dir = DirEnum.down;
+                        break;
+                }
+            }
         }
     }
 
