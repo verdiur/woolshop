@@ -53,11 +53,6 @@ extends Actor
         DirEnum dir = m_ka.getDir();
         if (canMove(collision_arr, dir)) {
             move(dir);
-            System.out.print("(x,y) = (");
-            System.out.print(m_x);
-            System.out.print(", ");
-            System.out.print(m_y);
-            System.out.println(")");
         }
     }
 

@@ -153,7 +153,7 @@ public class GamePanel extends JPanel implements Runnable{
 			player_sprite =
 			ImageIO.read(getClass().getResource("/player/beberito.png"));
 		} catch (IOException e) {
-			//System.out.println(e);
+			System.out.println(e);
 		}
 		m_player = new Player(
 			this, 
@@ -291,8 +291,6 @@ public class GamePanel extends JPanel implements Runnable{
 				break;
 		}
 
-		addMoneyCounter( m_player.getMoney());
-		m_player.setMoney(0);
 
 		if (m_player.getX() == (int)0 && m_player.getY() == (int)1 && m_current_room == 1) {
 			m_current_room = 2;
@@ -305,6 +303,8 @@ public class GamePanel extends JPanel implements Runnable{
 			m_player.setX(MAX_SCREEN_COL - 2);
 			m_player.setY(1);
 			m_map_manager.loadMap("/maps/map2.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+
+			
 		}
 		else if (m_player.getX() == MAX_SCREEN_COL-1 && m_player.getY() == (int)1 && m_current_room == 2) {
 			m_current_room = 1;
@@ -319,12 +319,21 @@ public class GamePanel extends JPanel implements Runnable{
 			m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 		}
 
-		if (moneyCounter == money_win_amount) {
+		if (moneyCounter >= money_win_amount) {
 			m_gamestate = GameStateEnum.end;
+		}
+
+		if (m_current_room == 2 && m_player.getX() <= 10 && m_player.getY() <=3 ){
+			addMoneyCounter( m_player.getMoney());
+			m_player.setMoney(0);
 		}
   	}
 
 	public void update_time() {
+
+		if (m_player != null && m_player.getMoney() > 0){
+			m_player.addMoney(-1);
+		}
 
 		if (m_client_arr != null && m_client_arr.size() < 3 && rnd.nextInt(5) == 3){
 
@@ -370,6 +379,8 @@ public class GamePanel extends JPanel implements Runnable{
 			m_entity_arr_room1.add(n_client);
 			m_actor_arr_room1.add(n_client);
 			m_collision_arr_room1.add(n_client);
+
+			
 
 		}
 
@@ -436,7 +447,7 @@ public class GamePanel extends JPanel implements Runnable{
 			// Affichage compteur argent
 			g2.setFont(new Font("Arial", Font.BOLD, 20));
 			g2.setColor(Color.WHITE);
-			g2.drawString("Money: " + moneyCounter + "$", 10, 20);
+			g2.drawString("Money: " + moneyCounter + "(+" + m_player.getMoney() + ")" + "/" + money_win_amount + "$" , 10, 20);
 
 			g2.dispose();
 

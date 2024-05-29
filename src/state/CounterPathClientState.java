@@ -25,7 +25,7 @@ public class CounterPathClientState extends ClientState {
         super.m_name = "counter";
         super.m_transition = false;   
         m_client = client; 
-        System.out.println(m_xdest);
+        //System.out.println(m_xdest);
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat

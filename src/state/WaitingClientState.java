@@ -40,7 +40,7 @@ public class WaitingClientState extends ClientState {
                 divide();
 			}
 		};
-		m_timer.scheduleAtFixedRate(mt_update, new Date(), 10000);
+		m_timer.scheduleAtFixedRate(mt_update, new Date(), 5000);
 
     }
 
@@ -69,7 +69,8 @@ public class WaitingClientState extends ClientState {
 
     public void divide(){
         m_client.setMoney(m_client.getMoney()/2);
-        if (m_client.getMoney() <= 15){
+        //System.out.println(m_client.getMoney());
+        if (m_client.getMoney() <= 5){
             transition();
         }
     }

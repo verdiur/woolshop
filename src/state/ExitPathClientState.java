@@ -25,7 +25,7 @@ public class ExitPathClientState extends ClientState {
         super.m_name = "exit";
         super.m_transition = false;   
         m_client = client; 
-        System.out.println(m_xdest);
+        //System.out.println(m_xdest);
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat

@@ -92,8 +92,8 @@ public class ClientStateMachine{
         }
         else
         {
-            System.out.println("transition");
-            System.out.println(new_state);
+            //System.out.println("transition");
+            //System.out.println(new_state);
             m_current_state.Exit();
 
             int x = m_current_state.getX();
