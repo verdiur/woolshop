@@ -1,6 +1,7 @@
 package tile;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import actor.Player;
 import entity.Entity;
@@ -22,19 +23,23 @@ public class Stall extends GameObject {
 
     @Override
     public void use() {
-        for (Entity element : m_gp.getCollisions()){
+        ArrayList<Entity> collisions = m_gp.getCollisions();
+        for (Entity element : collisions){
             if (element instanceof Player){
                 if (m_wool > 0 && !((Player)element).getWool()) {
                     ((Player)element).setWool(true);
                     System.out.println(((Player)element).getWool());
                     m_wool -= 1;
+                    break;
                 }
                 else if (((Player)element).getWool() && m_wool <= m_max_wool) {
                     ((Player)element).setWool(false);
                     System.out.println(((Player)element).getWool());
                     m_wool += 1;
+                    break;
                 }
             }
         }
+        System.out.println(m_wool);
     }
 }

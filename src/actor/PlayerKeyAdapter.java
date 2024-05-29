@@ -8,7 +8,6 @@ import java.util.Set;
 import util.DirEnum;
 import util.UseEnum;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 /**
@@ -63,9 +62,9 @@ public class PlayerKeyAdapter implements KeyListener {
                     break;
             }
         }
-        System.out.println(pressedKeys);
-        System.out.println(m_dir);
-        System.out.println(m_use);
+        // System.out.println(pressedKeys);
+        // System.out.println(m_dir);
+        // System.out.println(m_use);
         m_player.setMoved(false);
     }
 
@@ -99,9 +98,9 @@ public class PlayerKeyAdapter implements KeyListener {
             }
         }
         
-        System.out.println(pressedKeys);
-        System.out.println(m_dir);
-        System.out.println(m_use);
+        // System.out.println(pressedKeys);
+        // System.out.println(m_dir);
+        // System.out.println(m_use);
     }
 
     @Override

@@ -23,10 +23,12 @@ public class Crab extends GameObject {
                 if (!((Player)element).getWool()) {
                     ((Player)element).setWool(true);
                     System.out.println(((Player)element).getWool());
+                    break;
                 }
                 else if (((Player)element).getWool()) {
                     ((Player)element).setWool(false);
                     System.out.println(((Player)element).getWool());
+                    break;
                 }
             }
         }
