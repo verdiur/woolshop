@@ -12,9 +12,4 @@ public class Wall extends GameObject {
     public Wall(GamePanel a_gp, int x, int y, BufferedImage sprite) {
         super(a_gp, x, y, sprite);
     }
-
-    @Override
-    public void use() {
-        
-    }
 }

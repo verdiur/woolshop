@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 import entity.Tile;
-import tile.Crab;
-import tile.Stall;
 import tile.Wall;
 
 /**
@@ -234,7 +232,7 @@ public class MapManager {
                         case 21: {
                             try { s = ImageIO.read(getClass().getResource("/tiles/CRAB.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Crab(m_gp, row, col, s);
+                            e = new Wall(m_gp, row, col, s);
                             m_gp.getEntities().add(e);
                             m_gp.getTiles().add(e);
                             m_gp.getCollisions().add(e);
@@ -244,7 +242,7 @@ public class MapManager {
                         case 22: {
                             try { s = ImageIO.read(getClass().getResource("/tiles/SHELF.png")); }
                             catch (IOException ioe1) { System.out.println(ioe1); }
-                            e = new Stall(m_gp, row, col, s);
+                            e = new Wall(m_gp, row, col, s);
                             m_gp.getEntities().add(e);
                             m_gp.getTiles().add(e);
                             m_gp.getCollisions().add(e);

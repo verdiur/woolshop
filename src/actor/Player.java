@@ -10,9 +10,7 @@ import entity.Actor;
 import entity.Entity;
 import entity.Tile;
 import main.GamePanel;
-import tile.GameObject;
 import util.DirEnum;
-import util.UseEnum;
 
 /**
  * Joueur.
@@ -23,8 +21,6 @@ extends Actor
     PlayerKeyAdapter m_ka;
     int m_money;
     
-
-    boolean m_has_wool = false;
 
     /**
      * Constructeur de classe avec un seul sprite. Le sprite sera chargé dans un ArrayList
@@ -52,47 +48,12 @@ extends Actor
         m_ka = new PlayerKeyAdapter(this);
     }
 
-    public void use(DirEnum dir, UseEnum use, ArrayList<Entity> collision_arr) {
-        if (!has_used) {
-            for (Entity e: collision_arr) {
-                if (!(e instanceof Actor)) {
-                    if (((GameObject)e).isAt(this, dir) && use == UseEnum.use) {
-                        ((GameObject)e).use();
-                        has_used = true;
-                    }
-                }
-            }
-        }
-    }
-
-    public void setWool(boolean wool) {
-        m_has_wool = wool;
-    }
-
-    public boolean getWool() {
-        return m_has_wool;
-    }
-
     @Override
     public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr) {
         DirEnum dir = m_ka.getDir();
-        UseEnum use = m_ka.getUse();
-
-        // System.out.println(dir);
-        // System.out.println(use);
-
-        use(dir, use, collision_arr);
-
         if (canMove(collision_arr, dir)) {
             move(dir);
-            // System.out.print("(x,y) = (");
-            // System.out.print(m_x);
-            // System.out.print(", ");
-            // System.out.print(m_y);
-            // System.out.println(")");
         }
-        
-        // System.out.println(m_has_wool);
     }
 
     @Override
