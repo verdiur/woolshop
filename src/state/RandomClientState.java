@@ -105,11 +105,11 @@ public class RandomClientState extends ClientState {
     public ArrayList<Integer[]> neighbors(ArrayList<Entity> collision_arr){ 
         ArrayList<Integer[]> neighb = new ArrayList<Integer[]>();
         if (m_client.canMove(collision_arr, DirEnum.up)) {
-           Integer[] m_coor = {m_x, m_y+1};
+           Integer[] m_coor = {m_x, m_y-1};
             neighb.add(m_coor);
         } 
-        if(m_client.canMove(collision_arr, DirEnum.down)){
-            Integer[] m_coor = {m_x, m_y-1};
+        if(m_client.canMove(collision_arr, DirEnum.down) && m_y > 0){
+            Integer[] m_coor = {m_x, m_y+1};
             neighb.add(m_coor);
         } 
         if(m_client.canMove(collision_arr, DirEnum.right)){

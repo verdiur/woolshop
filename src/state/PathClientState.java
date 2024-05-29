@@ -55,27 +55,37 @@ public class PathClientState extends ClientState {
             super.m_transition_name = "rdm";
             m_dir = DirEnum.no;
         } else {
-            if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.up)){
+            if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.down)){
                 m_y ++;
-            } else if(m_y > m_ydest && m_client.canMove(collision_arr, DirEnum.down)){
+
+            } else if(m_y > m_ydest && m_client.canMove(collision_arr, DirEnum.up)){
                 m_y --;
+
             } else if (m_x > m_xdest && m_client.canMove(collision_arr, DirEnum.left) && m_y == m_ydest){
                 m_x --;
+
             } else if (m_x < m_xdest && m_client.canMove(collision_arr, DirEnum.right) && m_y == m_ydest){
                 m_x ++;
+
             }else if (!m_client.canMove(collision_arr, DirEnum.up) && m_client.canMove(collision_arr, DirEnum.right)){
                 m_x ++;
+
             } else if (m_x > m_xdest && m_client.canMove(collision_arr, DirEnum.left)){
                 m_x --;
+
             } else if (m_x < m_xdest && m_client.canMove(collision_arr, DirEnum.right)){
                 m_x ++;
+
             } else if(m_client.canMove(collision_arr, DirEnum.right)){
                 m_x ++;
+
             } else if (m_client.canMove(collision_arr, DirEnum.left)){
                 m_x --;
-            } else if (m_client.canMove(collision_arr, DirEnum.up)){
+
+            } else if (m_client.canMove(collision_arr, DirEnum.down)){
                 m_y ++;
-            } else if(m_client.canMove(collision_arr, DirEnum.down)){
+
+            } else if(m_client.canMove(collision_arr, DirEnum.up)){
                 m_y --;
             }
         }
