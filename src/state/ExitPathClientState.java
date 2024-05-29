@@ -53,6 +53,7 @@ public class ExitPathClientState extends ClientState {
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
             super.m_transition_name = "rdm";
+            m_client.setDead();
             m_dir = DirEnum.no;
         } else {
             if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.down)){

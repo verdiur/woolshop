@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
+import java.util.Random;
 
 
 /**
@@ -53,6 +54,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 	int m_current_room = 1;
 
+	public Random rnd;
+
 	/** Conteneur pour toutes les entités */
 	ArrayList<Entity> m_entity_arr_room1;
 	/** Conteneur pour les Actors (bougent) */
@@ -61,6 +64,8 @@ public class GamePanel extends JPanel implements Runnable{
 	ArrayList<Tile> m_tile_arr_room1;
 	/** Conteneur d'entités ayant collision */
 	ArrayList<Entity> m_collision_arr_room1;
+
+	ArrayList<Client> m_client_arr;
 	
 	/** Conteneur pour toutes les entités */
 	ArrayList<Entity> m_entity_arr_room2;
@@ -125,6 +130,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
 
+		rnd = new Random();
+
 		m_keyH = new KeyHandler();
 
 		/** Player */
@@ -133,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable{
 			player_sprite =
 			ImageIO.read(getClass().getResource("/player/beberito.png"));
 		} catch (IOException e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 		m_player = new Player(
 			this, 
@@ -142,25 +149,12 @@ public class GamePanel extends JPanel implements Runnable{
 			player_sprite
 		);
 
-		BufferedImage client_sprite = null;
-		try {
-			client_sprite =
-			ImageIO.read(getClass().getResource("/player/brutus_b.png"));
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-		m_client = new Client(
-			this, 
-			4, 
-			11,
-			client_sprite
-		);
-
 		/** Conteneurs d'entités room 1 */
 		m_entity_arr_room1 = new ArrayList<Entity>();
 		m_actor_arr_room1 = new ArrayList<Actor>();
 		m_tile_arr_room1 = new ArrayList<Tile>();
 		m_collision_arr_room1 = new ArrayList<Entity>();
+		m_client_arr = new ArrayList<Client>();
 
 		/** Conteneurs d'entités room 2 */
 		m_entity_arr_room2 = new ArrayList<Entity>();
@@ -287,9 +281,76 @@ public class GamePanel extends JPanel implements Runnable{
   	}
 
 	public void update_time() {
-		if (m_client != null) {
-			m_client.update(m_actor_arr_room1, m_tile_arr_room1, m_collision_arr_room1);
+
+		if (m_client_arr != null && m_client_arr.size() < 3 && rnd.nextInt(5) == 3){
+
+
+			BufferedImage client_sprite = null;
+			
+			int color = rnd.nextInt(1,3);
+			switch(color){
+				case 1:
+					try {
+						client_sprite =
+						ImageIO.read(getClass().getResource("/player/brutus_b.png"));
+					} catch (IOException e) {
+						System.out.println(e);
+					}
+					break;
+				case 2:
+					try {
+						client_sprite =
+						ImageIO.read(getClass().getResource("/player/brutus_r.png"));
+					} catch (IOException e) {
+						System.out.println(e);
+					}
+					break;
+				case 3:
+					try {
+						client_sprite =
+						ImageIO.read(getClass().getResource("/player/brutus_g.png"));
+					} catch (IOException e) {
+						System.out.println(e);
+					}
+					break;
+			}
+			
+			Client n_client = new Client(
+				this, 
+				4, 
+				11,
+				client_sprite
+			);
+
+			m_client_arr.add(n_client);
+			m_entity_arr_room1.add(n_client);
+			m_actor_arr_room1.add(n_client);
+			m_collision_arr_room1.add(n_client);
+
 		}
+
+		ArrayList<Client> del_list = new ArrayList<Client>();
+
+		if (m_client_arr != null){
+			for (Client client : m_client_arr){
+				if (client.isdead()){
+					del_list.add(client);
+				}else{
+					client.update_time(m_actor_arr_room1, m_tile_arr_room1, m_collision_arr_room1);
+				}
+				
+			}
+		}
+
+		if (del_list != null){
+			for (Client client : del_list){
+				m_client_arr.remove(client);
+				m_entity_arr_room1.remove(client);
+				m_actor_arr_room1.remove(client);
+				m_collision_arr_room1.remove(client);
+			}
+		}
+		
 	}
   
    	/********* ?????????? */
@@ -310,7 +371,9 @@ public class GamePanel extends JPanel implements Runnable{
 				for (Entity e: m_actor_arr_room1) {
 					e.draw(g2);
 				}
-				m_client.draw(g2);
+				for (Entity e: m_client_arr){
+					e.draw(g2);
+				}
 				break;
 			case 2:
 				for (Entity e: m_tile_arr_room2) {

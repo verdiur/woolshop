@@ -51,9 +51,9 @@ public class WaitingClientState extends ClientState {
     public void Update(ArrayList<Entity> collision_arr){
         for (Entity element : collision_arr){
             if (element instanceof Player){
-                System.out.println(element);
                 if (element.getX() == 1 && element.getY() == 1){
-                    System.out.println((((Player) element).getKeyAdapter()).getkey());
+                    ((Player)element).addMoney(m_client.getMoney());
+                    transition();
                 }
             } 
             
@@ -69,7 +69,6 @@ public class WaitingClientState extends ClientState {
 
     public void divide(){
         m_client.setMoney(m_client.getMoney()/2);
-        System.out.println(m_client.getMoney());
         if (m_client.getMoney() <= 15){
             transition();
         }

@@ -19,6 +19,7 @@ public class Player
 extends Actor 
 {
     PlayerKeyAdapter m_ka;
+    int m_money;
     
 
     /**
@@ -31,6 +32,7 @@ extends Actor
      */
     public Player(GamePanel a_gp, int x, int y, BufferedImage sprite) {
         super(a_gp, x, y, sprite);
+        m_money = 0;
         m_ka = new PlayerKeyAdapter(this);
     }
 
@@ -68,8 +70,9 @@ extends Actor
         return m_ka;
     }
 
-    public int getkey() {
-        return m_ka.getkey();
+    public void addMoney(int money){
+        m_money+=money;
+        System.out.println(m_money);
     }
 
 }

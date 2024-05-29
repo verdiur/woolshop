@@ -60,9 +60,4 @@ public class PlayerKeyAdapter implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 
-    public int getkey(KeyEvent e){
-        return e.getKeyCode();
-    }
-
-    public int getKey(){return current_key;}
 }

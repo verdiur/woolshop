@@ -28,6 +28,7 @@ public class Client extends Actor
     private int m_xdest;
     private int m_ydest;
     private int m_money;
+    private boolean dead;
 
     private ClientStateMachine m_state;
 
@@ -83,6 +84,7 @@ public class Client extends Actor
                                         "exit", new ExitPathClientState(super.m_x, super.m_y, this),
                                         "waiting", new WaitingClientState(this));
         m_state = new ClientStateMachine("rdm", map);
+        dead = false;
     }
 
     /**
@@ -96,12 +98,15 @@ public class Client extends Actor
         super(a_gp, x, y, sprite_map);
     }
 
+    public boolean isdead(){return dead;}
+
     @Override
     public void draw(Graphics2D g2) {
         super.draw(g2);
     }
-
-    public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr){
+    public void update(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr){return;
+    }
+    public void update_time(ArrayList<Actor> actor_arr, ArrayList<Tile> tile_arr, ArrayList<Entity> collision_arr){
         m_state.Update(collision_arr);
         super.m_x = m_state.getState().getX();
         super.m_y = m_state.getState().getY();
@@ -114,5 +119,6 @@ public class Client extends Actor
 
     public void setMoney(int money){ m_money = money;}
     public int getMoney(){ return m_money; }
+    public void setDead(){dead = true;}
 }
 
