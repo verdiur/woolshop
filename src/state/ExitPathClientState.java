@@ -7,7 +7,7 @@ import util.DirEnum;
 import actor.Client;
 import java.util.Random;
 
-public class PathClientState extends ClientState {
+public class ExitPathClientState extends ClientState {
 
     private int m_x;
     private int m_y;
@@ -17,15 +17,15 @@ public class PathClientState extends ClientState {
     private Client m_client;
     Random rdm = new Random();
     
-    public PathClientState(int x, int y, int x_dest, int y_dest, Client client){
+    public ExitPathClientState(int x, int y, Client client){
         m_x = x;
         m_y = y;
-        m_xdest = x_dest;
-        m_ydest = y_dest;
-        super.m_name = "path";
+        m_xdest = 4;
+        m_ydest = 11;
+        super.m_name = "exit";
         super.m_transition = false;   
         m_client = client; 
-        System.out.println(m_xdest);
+        //System.out.println(m_xdest);
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat
@@ -52,7 +52,8 @@ public class PathClientState extends ClientState {
         // System.out.println("a");
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
-            super.m_transition_name = "counter";
+            super.m_transition_name = "rdm";
+            m_client.setDead();
             m_dir = DirEnum.no;
         } else {
             if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.down)){

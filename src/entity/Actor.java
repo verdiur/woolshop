@@ -67,6 +67,14 @@ public abstract class Actor extends Entity implements Collision
         return true;
 
     }
+
+    public void setX(int x) {
+        m_x = x;
+    }
+
+    public void setY(int y) {
+        m_y = y;
+    }
     
     @Override
     public boolean isNext(Entity entity) {
