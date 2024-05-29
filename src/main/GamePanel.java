@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int MAX_SCREEN_ROW = 12; 					 	// ces valeurs donnent une résolution 4:3
 	public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; 	// 1024 pixels
 	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;	// 768 pixels
-	int money_win_amount = 0;
+	int money_win_amount = 200;
 
 	// FPS : taux de rafraichissement
 	int m_FPS;
