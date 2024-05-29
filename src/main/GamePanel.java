@@ -448,7 +448,7 @@ public class GamePanel extends JPanel implements Runnable{
 			g2.setFont(new Font("Arial", Font.BOLD, 20));
 			g2.setColor(Color.WHITE);
 			g2.drawString("Money: " + moneyCounter + "(+" + m_player.getMoney() + ")" + "/" + money_win_amount + "$" , 10, 20);
-			g2.drawString("Wool: " + m_player.getWool() , 10, 40);
+			/*g2.drawString("Wool: " + m_player.getWool() , 10, 40);*/
 
 			g2.dispose();
 
