@@ -337,7 +337,6 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 				break;
 		}
-		m_client.draw(g2);
 
 		// Affichage compteur argent
 		g2.setFont(new Font("Arial", Font.BOLD, 20));
