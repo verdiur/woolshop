@@ -7,11 +7,15 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 
 import util.GameStateEnum;
 import entity.Entity;
 import entity.Actor;
 import entity.Tile;
+import sound.MusicLoop;
+import sound.SoundPlay;
 import actor.Player;
 import actor.Client;
 
@@ -39,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int MAX_SCREEN_ROW = 12; 					 	// ces valeurs donnent une résolution 4:3
 	public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; 	// 1024 pixels
 	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;	// 768 pixels
-	int money_win_amount = 500;
+	int money_win_amount = 0;
 
 	// FPS : taux de rafraichissement
 	int m_FPS;
@@ -81,6 +85,12 @@ public class GamePanel extends JPanel implements Runnable{
 	ArrayList<Tile> m_tile_arr_room2;
 	/** Conteneur d'entités ayant collision */
 	ArrayList<Entity> m_collision_arr_room2;
+
+	AudioInputStream m_music_loop_is;
+	MusicLoop m_music_loop;
+
+	AudioInputStream m_win_sound_is;
+	SoundPlay m_win_sound;
 
 	public ArrayList<Entity> getEntities() {
 		switch(m_current_room) {
@@ -170,6 +180,24 @@ public class GamePanel extends JPanel implements Runnable{
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+
+		/** CHARGER SONS */
+
+		m_music_loop_is = null;
+		try {
+			m_music_loop_is = AudioSystem.getAudioInputStream(getClass().getResource("/sound/mus1.wav"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		m_music_loop = new MusicLoop(m_music_loop_is);
+
+		m_win_sound_is = null;
+		try {
+			m_win_sound_is = AudioSystem.getAudioInputStream(getClass().getResource("/sound/win.wav"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		m_win_sound = new SoundPlay(m_win_sound_is);
 
 		/** Conteneurs d'entités room 1 */
 		m_entity_arr_room1 = new ArrayList<Entity>();
@@ -266,9 +294,15 @@ public class GamePanel extends JPanel implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+
+				m_music_loop.playLoop();
+
 				break;
+
 			case end:
 				this.repaint();
+				m_music_loop.stopLoop();
+				m_win_sound.play();
 				break;
 			}	
 		}
