@@ -1,6 +1,11 @@
 package state;
 
+import java.util.ArrayList;
+
+import entity.Entity;
 import util.DirEnum;
+import actor.Client;
+import java.util.Random;
 
 public class PathClientState extends ClientState {
 
@@ -9,14 +14,18 @@ public class PathClientState extends ClientState {
     private int m_xdest;
     private int m_ydest;
     private DirEnum m_dir = DirEnum.no;
+    private Client m_client;
+    Random rdm = new Random();
     
-    public PathClientState(int x, int y, int x_dest, int y_dest){
+    public PathClientState(int x, int y, int x_dest, int y_dest, Client client){
         m_x = x;
         m_y = y;
         m_xdest = x_dest;
         m_ydest = y_dest;
         super.m_name = "path";
-        super.m_transition = false;    
+        super.m_transition = false;   
+        m_client = client; 
+        System.out.println(m_xdest);
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat
@@ -38,20 +47,35 @@ public class PathClientState extends ClientState {
     /**
      * Methode qui execute les actions correspondant à l'update de l'etat
      */
-    public void Update(){
+    public void Update(ArrayList<Entity> collision_arr){
+
         // System.out.println("a");
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
             super.m_transition_name = "rdm";
             m_dir = DirEnum.no;
         } else {
-            if (m_x < m_xdest){
-                m_x ++;
-            } else if (m_x > m_xdest){
-                m_x --;
-            } else if (m_y < m_ydest){
+            if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.up)){
                 m_y ++;
-            } else if(m_y > m_ydest){
+            } else if(m_y > m_ydest && m_client.canMove(collision_arr, DirEnum.down)){
+                m_y --;
+            } else if (m_x > m_xdest && m_client.canMove(collision_arr, DirEnum.left) && m_y == m_ydest){
+                m_x --;
+            } else if (m_x < m_xdest && m_client.canMove(collision_arr, DirEnum.right) && m_y == m_ydest){
+                m_x ++;
+            }else if (!m_client.canMove(collision_arr, DirEnum.up) && m_client.canMove(collision_arr, DirEnum.right)){
+                m_x ++;
+            } else if (m_x > m_xdest && m_client.canMove(collision_arr, DirEnum.left)){
+                m_x --;
+            } else if (m_x < m_xdest && m_client.canMove(collision_arr, DirEnum.right)){
+                m_x ++;
+            } else if(m_client.canMove(collision_arr, DirEnum.right)){
+                m_x ++;
+            } else if (m_client.canMove(collision_arr, DirEnum.left)){
+                m_x --;
+            } else if (m_client.canMove(collision_arr, DirEnum.up)){
+                m_y ++;
+            } else if(m_client.canMove(collision_arr, DirEnum.down)){
                 m_y --;
             }
         }
