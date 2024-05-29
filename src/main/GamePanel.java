@@ -229,6 +229,10 @@ public class GamePanel extends JPanel implements Runnable{
 		moneyCounter = mC;
 	}
 
+	public void addMoneyCounter(int mC) {
+		moneyCounter += mC;
+	}
+
 	public int getMoneyCounter() {
 		return moneyCounter;
 	}
@@ -286,6 +290,9 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 				break;
 		}
+
+		addMoneyCounter( m_player.getMoney());
+		m_player.setMoney(0);
 
 		if (m_player.getX() == (int)0 && m_player.getY() == (int)1 && m_current_room == 1) {
 			m_current_room = 2;

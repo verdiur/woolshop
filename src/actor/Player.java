@@ -72,7 +72,14 @@ extends Actor
 
     public void addMoney(int money){
         m_money+=money;
-        System.out.println(m_money);
+    }
+
+    public void setMoney(int money){
+        m_money=money;
+    }
+
+    public int getMoney(){
+        return m_money;
     }
 
 }
