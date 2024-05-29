@@ -128,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		};
 
-		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
+		m_timer.scheduleAtFixedRate(t_update, new Date(), 500);
 
 		rnd = new Random();
 
@@ -287,7 +287,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 			BufferedImage client_sprite = null;
 			
-			int color = rnd.nextInt(1,3);
+			int color = rnd.nextInt(1,4);
 			switch(color){
 				case 1:
 					try {
