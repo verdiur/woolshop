@@ -108,7 +108,7 @@ public class RandomClientState extends ClientState {
            Integer[] m_coor = {m_x, m_y-1};
             neighb.add(m_coor);
         } 
-        if(m_client.canMove(collision_arr, DirEnum.down) && m_y > 0){
+        if(m_client.canMove(collision_arr, DirEnum.down) && m_y < 11){
             Integer[] m_coor = {m_x, m_y+1};
             neighb.add(m_coor);
         } 

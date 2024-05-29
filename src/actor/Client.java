@@ -74,7 +74,10 @@ public class Client extends Actor
         // m_ydest = coor[1];
         // System.out.println(super.m_x);
         // System.out.println(super.m_y);
-        Map<String, ClientState> map = Map.of("rdm", new RandomClientState(super.m_x,super.m_y,this), "path", new PathClientState(super.m_x, super.m_y, m_xdest, m_ydest, this));
+        Map<String, ClientState> map = Map.of("rdm", new RandomClientState(super.m_x,super.m_y,this),
+                                        "path", new PathClientState(super.m_x, super.m_y, m_xdest, m_ydest, this),
+                                        "counter", new CounterPathClientState(super.m_x, super.m_y, this),
+                                        "exit", new ExitPathClientState(super.m_x, super.m_y, this));
         m_state = new ClientStateMachine("rdm", map);
     }
 
