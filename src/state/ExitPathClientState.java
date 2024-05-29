@@ -25,7 +25,7 @@ public class ExitPathClientState extends ClientState {
         super.m_name = "exit";
         super.m_transition = false;   
         m_client = client; 
-        System.out.println(m_xdest);
+        //System.out.println(m_xdest);
     }
 
     // Definie l'ensemble des executions à l'entrée de l'etat
@@ -53,6 +53,7 @@ public class ExitPathClientState extends ClientState {
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
             super.m_transition_name = "rdm";
+            m_client.setDead();
             m_dir = DirEnum.no;
         } else {
             if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.down)){

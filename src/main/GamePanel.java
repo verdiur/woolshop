@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
 
+import util.GameStateEnum;
 import entity.Entity;
 import entity.Actor;
 import entity.Tile;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
+import java.util.Random;
 
 
 /**
@@ -35,11 +37,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; 	// 48x48
 	public final int MAX_SCREEN_COL = 16;
 	public final int MAX_SCREEN_ROW = 12; 					 	// ces valeurs donnent une résolution 4:3
-	public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; // 768 pixels
-	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;	// 576 pixels
+	public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; 	// 1024 pixels
+	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;	// 768 pixels
+	int money_win_amount = 500;
 
 	// FPS : taux de rafraichissement
 	int m_FPS;
+
+	GameStateEnum m_gamestate;
+	BufferedImage m_ecran_fin_sprite;
 	
 	// Création des différentes instances (Player, KeyHandler, TileManager, GameThread ...)
 	// KeyHandler m_keyH;
@@ -54,6 +60,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 	int m_current_room = 1;
 
+	public Random rnd;
+
 	/** Conteneur pour toutes les entités */
 	ArrayList<Entity> m_entity_arr_room1;
 	/** Conteneur pour les Actors (bougent) */
@@ -62,6 +70,8 @@ public class GamePanel extends JPanel implements Runnable{
 	ArrayList<Tile> m_tile_arr_room1;
 	/** Conteneur d'entités ayant collision */
 	ArrayList<Entity> m_collision_arr_room1;
+
+	ArrayList<Client> m_client_arr;
 	
 	/** Conteneur pour toutes les entités */
 	ArrayList<Entity> m_entity_arr_room2;
@@ -127,11 +137,15 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		};
 
-		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
+		m_timer.scheduleAtFixedRate(t_update, new Date(), 500);
+
+		rnd = new Random();
 
 		moneyCounter = 0;
 
 		m_keyH = new KeyHandler();
+
+		m_gamestate = GameStateEnum.game;
 
 		/** Player */
 		BufferedImage player_sprite = null;
@@ -148,25 +162,21 @@ public class GamePanel extends JPanel implements Runnable{
 			player_sprite
 		);
 
-		BufferedImage client_sprite = null;
+
+		m_ecran_fin_sprite = null;
 		try {
-			client_sprite =
-			ImageIO.read(getClass().getResource("/player/brutus_b.png"));
+			m_ecran_fin_sprite = 
+			ImageIO.read(getClass().getResource("/ecranfin.png"));
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		m_client = new Client(
-			this, 
-			4, 
-			11,
-			client_sprite
-		);
 
 		/** Conteneurs d'entités room 1 */
 		m_entity_arr_room1 = new ArrayList<Entity>();
 		m_actor_arr_room1 = new ArrayList<Actor>();
 		m_tile_arr_room1 = new ArrayList<Tile>();
 		m_collision_arr_room1 = new ArrayList<Entity>();
+		m_client_arr = new ArrayList<Client>();
 
 		/** Conteneurs d'entités room 2 */
 		m_entity_arr_room2 = new ArrayList<Entity>();
@@ -219,6 +229,10 @@ public class GamePanel extends JPanel implements Runnable{
 		moneyCounter = mC;
 	}
 
+	public void addMoneyCounter(int mC) {
+		moneyCounter += mC;
+	}
+
 	public int getMoneyCounter() {
 		return moneyCounter;
 	}
@@ -229,32 +243,36 @@ public class GamePanel extends JPanel implements Runnable{
 		double nextDrawTime = System.nanoTime() + drawInterval; 
 		
 		while(m_gameThread != null) { //Tant que le thread du jeu est actif
-			
-			// Permet de mettre à jour les différentes variables du jeu
-			this.update();
-			
-			// Dessine sur l'écran le personnage et la map avec les nouvelles informations. la méthode "paintComponent" doit obligatoirement être appelée avec "repaint()"
-			this.repaint();
-			
-			// Calcule le temps de pause du thread
-			try {
-				double remainingTime = nextDrawTime - System.nanoTime();
-				remainingTime = remainingTime/1000000;
+			switch (m_gamestate) {
+			case game:
+				// Permet de mettre à jour les différentes variables du jeu
+				this.update();
 				
-				if(remainingTime < 0) {
-					remainingTime = 0;
+				// Dessine sur l'écran le personnage et la map avec les nouvelles informations. la méthode "paintComponent" doit obligatoirement être appelée avec "repaint()"
+				this.repaint();
+				
+				// Calcule le temps de pause du thread
+				try {
+					double remainingTime = nextDrawTime - System.nanoTime();
+					remainingTime = remainingTime/1000000;
+					
+					if(remainingTime < 0) {
+						remainingTime = 0;
+					}
+					
+					Thread.sleep((long)remainingTime);
+					nextDrawTime += drawInterval;
+					
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
-				Thread.sleep((long)remainingTime);
-				nextDrawTime += drawInterval;
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+				break;
+			case end:
+				this.repaint();
+				break;
+			}	
 		}
 	}
-
-  	/********* ?????????? */
 
 	/**
 	 * Mise à jour des données des entités
@@ -273,6 +291,7 @@ public class GamePanel extends JPanel implements Runnable{
 				break;
 		}
 
+
 		if (m_player.getX() == (int)0 && m_player.getY() == (int)1 && m_current_room == 1) {
 			m_current_room = 2;
 			m_entity_arr_room1.remove(m_player);
@@ -284,6 +303,8 @@ public class GamePanel extends JPanel implements Runnable{
 			m_player.setX(MAX_SCREEN_COL - 2);
 			m_player.setY(1);
 			m_map_manager.loadMap("/maps/map2.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
+
+			
 		}
 		else if (m_player.getX() == MAX_SCREEN_COL-1 && m_player.getY() == (int)1 && m_current_room == 2) {
 			m_current_room = 1;
@@ -298,15 +319,94 @@ public class GamePanel extends JPanel implements Runnable{
 			m_map_manager.loadMap("/maps/map.txt", MAX_SCREEN_COL, MAX_SCREEN_ROW);
 		}
 
+		if (moneyCounter >= money_win_amount) {
+			m_gamestate = GameStateEnum.end;
+		}
+
+		if (m_current_room == 2 && m_player.getX() <= 10 && m_player.getY() <=3 ){
+			addMoneyCounter( m_player.getMoney());
+			m_player.setMoney(0);
+		}
   	}
 
 	public void update_time() {
-		if (m_client != null) {
-			m_client.update(m_actor_arr_room1, m_tile_arr_room1, m_collision_arr_room1);
+
+		if (m_player != null && m_player.getMoney() > 0){
+			m_player.addMoney(-1);
 		}
+
+		if (m_client_arr != null && m_client_arr.size() < 3 && rnd.nextInt(5) == 3){
+
+
+			BufferedImage client_sprite = null;
+			
+			int color = rnd.nextInt(1,4);
+			switch(color){
+				case 1:
+					try {
+						client_sprite =
+						ImageIO.read(getClass().getResource("/player/brutus_b.png"));
+					} catch (IOException e) {
+						System.out.println(e);
+					}
+					break;
+				case 2:
+					try {
+						client_sprite =
+						ImageIO.read(getClass().getResource("/player/brutus_r.png"));
+					} catch (IOException e) {
+						System.out.println(e);
+					}
+					break;
+				case 3:
+					try {
+						client_sprite =
+						ImageIO.read(getClass().getResource("/player/brutus_g.png"));
+					} catch (IOException e) {
+						System.out.println(e);
+					}
+					break;
+			}
+			
+			Client n_client = new Client(
+				this, 
+				4, 
+				11,
+				client_sprite
+			);
+
+			m_client_arr.add(n_client);
+			m_entity_arr_room1.add(n_client);
+			m_actor_arr_room1.add(n_client);
+			m_collision_arr_room1.add(n_client);
+
+			
+
+		}
+
+		ArrayList<Client> del_list = new ArrayList<Client>();
+
+		if (m_client_arr != null){
+			for (Client client : m_client_arr){
+				if (client.isdead()){
+					del_list.add(client);
+				}else{
+					client.update_time(m_actor_arr_room1, m_tile_arr_room1, m_collision_arr_room1);
+				}
+				
+			}
+		}
+
+		if (del_list != null){
+			for (Client client : del_list){
+				m_client_arr.remove(client);
+				m_entity_arr_room1.remove(client);
+				m_actor_arr_room1.remove(client);
+				m_collision_arr_room1.remove(client);
+			}
+		}
+		
 	}
-  
-   	/********* ?????????? */
 	
 	/**
 	 * Affichage des éléments
@@ -314,35 +414,52 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+
 		
-		// affichage tiles
-		switch(m_current_room) {
-			case 1:
-				for (Entity e: m_tile_arr_room1) {
-					e.draw(g2);
-				}
-				// affichage actors par dessus les tiles
-				for (Entity e: m_actor_arr_room1) {
-					e.draw(g2);
-				}
-				m_client.draw(g2);
-				break;
-			case 2:
-				for (Entity e: m_tile_arr_room2) {
-					e.draw(g2);
-				}
-				// affichage actors par dessus les tiles
-				for (Entity e: m_actor_arr_room2) {
-					e.draw(g2);
-				}
-				break;
+		switch (m_gamestate) {
+		case game:
+
+			// affichage tiles
+			switch(m_current_room) {
+				case 1:
+					for (Entity e: m_tile_arr_room1) {
+						e.draw(g2);
+					}
+					// affichage actors par dessus les tiles
+					for (Entity e: m_actor_arr_room1) {
+						e.draw(g2);
+					}
+          for (Entity e: m_client_arr){
+            e.draw(g2);
+          }
+					break;
+				case 2:
+					for (Entity e: m_tile_arr_room2) {
+						e.draw(g2);
+					}
+					// affichage actors par dessus les tiles
+					for (Entity e: m_actor_arr_room2) {
+						e.draw(g2);
+					}
+					break;
+			}
+
+			// Affichage compteur argent
+			g2.setFont(new Font("Arial", Font.BOLD, 20));
+			g2.setColor(Color.WHITE);
+			g2.drawString("Money: " + moneyCounter + "(+" + m_player.getMoney() + ")" + "/" + money_win_amount + "$" , 10, 20);
+
+			g2.dispose();
+
+		case end:
+				
+			g2.drawImage(
+				m_ecran_fin_sprite,
+				0, 
+				0,
+				null
+			);
+
 		}
-
-		// Affichage compteur argent
-		g2.setFont(new Font("Arial", Font.BOLD, 20));
-		g2.setColor(Color.WHITE);
-		g2.drawString("Money: " + moneyCounter + "$", 10, 20);
-
-		g2.dispose();
 	}
 }
