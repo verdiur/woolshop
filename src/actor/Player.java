@@ -47,7 +47,7 @@ extends Actor
     }
 
     public void use(DirEnum dir, UseEnum use) {
-        
+
     }
 
     @Override
