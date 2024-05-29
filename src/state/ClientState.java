@@ -1,5 +1,8 @@
 package state;
 
+import java.util.ArrayList;
+
+import entity.Entity;
 import state_machine.State;
 import util.DirEnum;
 
@@ -41,6 +44,8 @@ public abstract class ClientState extends State {
     /**
      * Methode qui execute les actions correspondant à l'update de l'etat
      */
-    public void Update(){}
+    public void Update(ArrayList<Entity> collision_arr){}
+
+    public void Update(){};
     
 }

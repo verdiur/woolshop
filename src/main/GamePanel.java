@@ -131,7 +131,7 @@ public class GamePanel extends JPanel implements Runnable{
 		BufferedImage player_sprite = null;
 		try {
 			player_sprite =
-			ImageIO.read(getClass().getResource("/player/bebert.png"));
+			ImageIO.read(getClass().getResource("/player/beberito.png"));
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -145,14 +145,14 @@ public class GamePanel extends JPanel implements Runnable{
 		BufferedImage client_sprite = null;
 		try {
 			client_sprite =
-			ImageIO.read(getClass().getResource("/player/testclient.png"));
+			ImageIO.read(getClass().getResource("/player/brutus_b.png"));
 		} catch (IOException e) {
 			System.out.println(e);
 		}
 		m_client = new Client(
 			this, 
-			3, 
-			4,
+			4, 
+			11,
 			client_sprite
 		);
 

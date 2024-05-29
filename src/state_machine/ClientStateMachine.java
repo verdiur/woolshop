@@ -1,7 +1,9 @@
 package state_machine;
 
+import java.util.ArrayList;
 import java.util.Map;
 
+import entity.Entity;
 import state.*;
 
 public class ClientStateMachine{
@@ -64,9 +66,9 @@ public class ClientStateMachine{
     /**
      * Methode qui Update l'etat actuel
      */
-    public void Update(){
+    public void Update(ArrayList<Entity> collision_arr){
 
-        m_current_state.Update();
+        m_current_state.Update(collision_arr);
         if (m_current_state.isTransition()){
             child_transition(m_current_state.get_name(), m_current_state.get_transition());
         }
@@ -90,6 +92,8 @@ public class ClientStateMachine{
         }
         else
         {
+            System.out.println("transition");
+            System.out.println(new_state);
             m_current_state.Exit();
 
             int x = m_current_state.getX();
