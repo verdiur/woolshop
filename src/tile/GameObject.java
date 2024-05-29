@@ -30,15 +30,15 @@ public abstract class GameObject extends Tile implements Collision {
     public boolean isAt(Entity entity, DirEnum dir) {
         switch (dir) {
             case up:
-                return entity.getY() == m_y - 1;
+                return entity.getY() == m_y + 1 && entity.getX() == m_x;
             case down:
-                return entity.getY() == m_y + 1;
+                return entity.getY() == m_y - 1 && entity.getX() == m_x;
             case left:
-                return entity.getX() == m_x - 1;
+                return entity.getX() == m_x - 1 && entity.getY() == m_y;
             case right:
-                return entity.getX() == m_x + 1;
+                return (entity.getX() == m_x + 1) && entity.getY() == m_y;
             default:
-                return false;
+                return true;
         }
     }
 
@@ -51,4 +51,6 @@ public abstract class GameObject extends Tile implements Collision {
             isAt(entity, DirEnum.right)
         );
     }
+
+    public abstract void use();
 }
