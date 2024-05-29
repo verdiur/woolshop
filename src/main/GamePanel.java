@@ -171,16 +171,12 @@ public class GamePanel extends JPanel implements Runnable{
 			System.out.println(e);
 		}
 
-<<<<<<< Updated upstream
 		/** Conteneurs d'entités room 1 */
 		m_entity_arr_room1 = new ArrayList<Entity>();
 		m_actor_arr_room1 = new ArrayList<Actor>();
 		m_tile_arr_room1 = new ArrayList<Tile>();
 		m_collision_arr_room1 = new ArrayList<Entity>();
 		m_client_arr = new ArrayList<Client>();
-=======
-		//m_tileM = new TileManager(this);
->>>>>>> Stashed changes
 
 		/** Conteneurs d'entités room 2 */
 		m_entity_arr_room2 = new ArrayList<Entity>();
