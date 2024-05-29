@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;		// TODO importer images avec classe ImageLoader
@@ -111,6 +112,9 @@ public class GamePanel extends JPanel implements Runnable{
 		return null;
 	}
 
+  // Money counter
+  int moneyCounter;
+  
 	/**
 	 * Constructeur
 	 */
@@ -124,6 +128,8 @@ public class GamePanel extends JPanel implements Runnable{
 		};
 
 		m_timer.scheduleAtFixedRate(t_update, new Date(), 1000);
+
+		moneyCounter = 0;
 
 		m_keyH = new KeyHandler();
 
@@ -207,6 +213,14 @@ public class GamePanel extends JPanel implements Runnable{
 	public void startGameThread() {
 		m_gameThread = new Thread(this);
 		m_gameThread.start();
+	}
+
+	public void setMoneyCounter(int mC) {
+		moneyCounter = mC;
+	}
+
+	public int getMoneyCounter() {
+		return moneyCounter;
 	}
 	
 	public void run() {
@@ -300,6 +314,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		
 		// affichage tiles
 		switch(m_current_room) {
 			case 1:
@@ -322,6 +337,13 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 				break;
 		}
+		m_client.draw(g2);
+
+		// Affichage compteur argent
+		g2.setFont(new Font("Arial", Font.BOLD, 20));
+		g2.setColor(Color.WHITE);
+		g2.drawString("Money: " + moneyCounter + "$", 10, 20);
+
 		g2.dispose();
 	}
 }
