@@ -17,6 +17,7 @@ public abstract class Actor extends Entity implements Collision
     protected GamePanel m_gp;
     protected boolean m_can_move;
     protected boolean has_moved = false;
+    protected boolean has_used = false;
 
     /**
      * Constructeur de classe. Nécessite de charger le sprite_map séparément.
@@ -147,6 +148,7 @@ public abstract class Actor extends Entity implements Collision
             default:
                 break;
         }
+        has_used = false;
     }
 
     public void draw(Graphics2D g2) {

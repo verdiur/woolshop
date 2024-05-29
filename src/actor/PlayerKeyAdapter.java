@@ -61,9 +61,11 @@ public class PlayerKeyAdapter implements KeyListener {
                 case 32:
                     m_use = UseEnum.no_use;
                     break;
-
             }
         }
+        System.out.println(pressedKeys);
+        System.out.println(m_dir);
+        System.out.println(m_use);
         m_player.setMoved(false);
     }
 
@@ -75,21 +77,31 @@ public class PlayerKeyAdapter implements KeyListener {
                 switch (it.next()) {
                     case 32:
                         m_use = UseEnum.use;
+                        // System.out.println("use");
+                        break;
                     case 0x25:      // left 
                         m_dir = DirEnum.left;
+                        // System.out.println("left");
                         break;
                     case 0x27:      // right
                         m_dir = DirEnum.right;
+                        // System.out.println("right");
                         break;
                     case 0x26:      // up
                         m_dir = DirEnum.up;
+                        // System.out.println("up");
                         break;
                     case 0x28:
                         m_dir = DirEnum.down;
+                        // System.out.println("down");
                         break;
                 }
             }
         }
+        
+        System.out.println(pressedKeys);
+        System.out.println(m_dir);
+        System.out.println(m_use);
     }
 
     @Override
