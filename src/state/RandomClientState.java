@@ -34,6 +34,7 @@ public class RandomClientState extends ClientState {
     public void Enter(){
         Random rdm = new Random();
         m_time = rdm.nextInt(MAX_TEMP);
+        m_client.setMoney(100);
     }
     // Definie l'ensemble des executions à la sortie de l'état
     // A définir dans la classe fille

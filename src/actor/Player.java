@@ -19,6 +19,8 @@ public class Player
 extends Actor 
 {
     PlayerKeyAdapter m_ka;
+    int m_money;
+    
 
     /**
      * Constructeur de classe avec un seul sprite. Le sprite sera chargé dans un ArrayList
@@ -30,6 +32,7 @@ extends Actor
      */
     public Player(GamePanel a_gp, int x, int y, BufferedImage sprite) {
         super(a_gp, x, y, sprite);
+        m_money = 0;
         m_ka = new PlayerKeyAdapter(this);
     }
 
@@ -66,4 +69,10 @@ extends Actor
     public KeyListener getKeyAdapter() {
         return m_ka;
     }
+
+    public void addMoney(int money){
+        m_money+=money;
+        System.out.println(m_money);
+    }
+
 }

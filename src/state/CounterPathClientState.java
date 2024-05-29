@@ -52,7 +52,7 @@ public class CounterPathClientState extends ClientState {
         // System.out.println("a");
         if (m_x == m_xdest && m_y == m_ydest){
             super.m_transition = true;
-            super.m_transition_name = "exit";
+            super.m_transition_name = "waiting";
             m_dir = DirEnum.no;
         } else {
             if (m_y < m_ydest && m_client.canMove(collision_arr, DirEnum.down)){
