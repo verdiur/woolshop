@@ -19,6 +19,7 @@ public class Player
 extends Actor 
 {
     PlayerKeyAdapter m_ka;
+    
 
     /**
      * Constructeur de classe avec un seul sprite. Le sprite sera chargé dans un ArrayList
@@ -66,4 +67,9 @@ extends Actor
     public KeyListener getKeyAdapter() {
         return m_ka;
     }
+
+    public int getkey() {
+        return m_ka.getkey();
+    }
+
 }

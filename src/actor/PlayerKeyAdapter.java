@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 public class PlayerKeyAdapter implements KeyListener {
     private Player m_player;
     private DirEnum m_dir;
+    private int current_key;
 
     PlayerKeyAdapter(Player player) {
         m_player = player;
@@ -38,6 +39,7 @@ public class PlayerKeyAdapter implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        current_key = code;
         switch (code) {
             case 0x25:   {}   // left
                 m_dir = DirEnum.left;
@@ -57,4 +59,10 @@ public class PlayerKeyAdapter implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {}
+
+    public int getkey(KeyEvent e){
+        return e.getKeyCode();
+    }
+
+    public int getKey(){return current_key;}
 }

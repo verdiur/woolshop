@@ -18,6 +18,7 @@ import state.*;
 import state_machine.*;
 
 
+
 /**
 * NPC1 -> client du magasin 
 */
@@ -26,6 +27,7 @@ public class Client extends Actor
 
     private int m_xdest;
     private int m_ydest;
+    private int m_money;
 
     private ClientStateMachine m_state;
 
@@ -64,6 +66,7 @@ public class Client extends Actor
                     break;
             }
             m_xdest = fst;
+            m_money = 100;
         }
         // Map<Integer, Integer[]> full_map = Map.of(                                                                                                
         //                                             );
@@ -77,7 +80,8 @@ public class Client extends Actor
         Map<String, ClientState> map = Map.of("rdm", new RandomClientState(super.m_x,super.m_y,this),
                                         "path", new PathClientState(super.m_x, super.m_y, m_xdest, m_ydest, this),
                                         "counter", new CounterPathClientState(super.m_x, super.m_y, this),
-                                        "exit", new ExitPathClientState(super.m_x, super.m_y, this));
+                                        "exit", new ExitPathClientState(super.m_x, super.m_y, this),
+                                        "waiting", new WaitingClientState(this));
         m_state = new ClientStateMachine("rdm", map);
     }
 
@@ -107,5 +111,8 @@ public class Client extends Actor
         System.out.println(m_y);*/
         m_state.getState().setPose(super.m_x, super.m_y);
     }
+
+    public void setMoney(int money){ m_money = money;}
+    public int getMoney(){ return m_money; }
 }
 
